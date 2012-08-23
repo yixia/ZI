@@ -8,6 +8,8 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
+import android.support.v4.app.FragmentActivity;
+
 
 /**
  * 
@@ -63,5 +65,12 @@ public class UIUtils {
         }
         return true;
     }
+    
+    public static ImageFetcher getImageFetcher(final FragmentActivity activity) {
+      // The ImageFetcher takes care of loading remote images into our ImageView
+      ImageFetcher fetcher = new ImageFetcher(activity);
+      fetcher.setImageCache(ImageCache.findOrCreateCache(activity, "imageFetcher"));
+      return fetcher;
+  }
   
 }
