@@ -9,8 +9,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Parcelable;
 import android.text.Html;
@@ -74,7 +74,6 @@ public final class IntentHelper {
 		try {
 			pi = pm.getPackageInfo(packageName, 0);
 			Intent intent = new Intent(Intent.ACTION_MAIN, null);
-			intent.addCategory(Intent.CATEGORY_LAUNCHER);
 			intent.setPackage(pi.packageName);
 
 			List<ResolveInfo> apps = pm.queryIntentActivities(intent, 0);
