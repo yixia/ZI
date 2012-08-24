@@ -45,6 +45,8 @@ public class ImageFetcher extends ImageWorker {
 	private static final int DEFAULT_MAX_THUMBNAIL_BYTES = 70 * 1024; // 70KB
 	private static final int DEFAULT_MAX_IMAGE_HEIGHT = 1024;
 	private static final int DEFAULT_MAX_IMAGE_WIDTH = 1024;
+	private static final int DEFAULT_MIN_IMAGE_HEIGHT = 256;
+	private static final int DEFAULT_MIN_IMAGE_WIDTH = 256;
 	private static final int DEFAULT_HTTP_CACHE_SIZE = 5 * 1024 * 1024; // 5MB
 	private static final String DEFAULT_HTTP_CACHE_DIR = "http";
 
@@ -87,7 +89,11 @@ public class ImageFetcher extends ImageWorker {
 	public void loadImage(String key, ImageView imageView) {
 		loadImage(new ImageData(key, ImageData.IMAGE_TYPE_NORMAL), imageView, mLoadingBitmap);
 	}
-
+	
+	public void loadLocalImage(String key, ImageView imageView) {
+		loadImage(new ImageData(key, ImageData.IMAGE_TYPE_LOCAL), imageView, mLoadingBitmap);
+	}
+	
 	public void setParams(ImageFetcherParams params) {
 		mFetcherParams = params;
 	}
@@ -135,6 +141,10 @@ public class ImageFetcher extends ImageWorker {
 				// into memory.
 				return BitmapFactory.decodeByteArray(bitmapBytes, 0, bitmapBytes.length);
 			}
+		} else if (type == ImageData.IMAGE_TYPE_LOCAL) {
+			// Return a sampled down version
+			final Bitmap bitmap = decodeSampledBitmapFromFile(key, mFetcherParams.mImageThumbnailWidth, mFetcherParams.mImageThumbnailHeight);
+			return bitmap;
 		}
 		return null;
 	}
@@ -259,6 +269,7 @@ public class ImageFetcher extends ImageWorker {
 
 		return null;
 	}
+	
 
 	/**
 	 * Decode and sample down a bitmap from a file to the requested width and
@@ -363,11 +374,14 @@ public class ImageFetcher extends ImageWorker {
 		public int mMaxThumbnailBytes = DEFAULT_MAX_THUMBNAIL_BYTES;
 		public int mHttpCacheSize = DEFAULT_HTTP_CACHE_SIZE;
 		public String mHttpCacheDir = DEFAULT_HTTP_CACHE_DIR;
+		public int mImageThumbnailWidth = DEFAULT_MIN_IMAGE_WIDTH;
+		public int mImageThumbnailHeight = DEFAULT_MIN_IMAGE_HEIGHT;
 	}
 
 	private static class ImageData {
 		public static final int IMAGE_TYPE_THUMBNAIL = 0;
 		public static final int IMAGE_TYPE_NORMAL = 1;
+		public static final int IMAGE_TYPE_LOCAL = 2;
 		public String mKey;
 		public int mType;
 
