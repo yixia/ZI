@@ -9,7 +9,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
-import android.os.Build;
 import android.widget.ImageView;
 
 public abstract class ImageLoader<T> {
@@ -18,12 +17,8 @@ public abstract class ImageLoader<T> {
 	private MemoryCache<T> mCacheBitmap = new MemoryCache<T>();
 
 	public ImageLoader() {
-		if (Build.VERSION.SDK_INT > 8) {
-			mQueue = new ThreadPoolExecutor(10, 10, 60, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>(), sThreadFactory);
-			mQueue.allowCoreThreadTimeOut(true);
-		} else {
-			mQueue = new ThreadPoolExecutor(2, 10, 60, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>(), sThreadFactory);
-		}
+		mQueue = new ThreadPoolExecutor(10, 10, 60, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>(), sThreadFactory);
+		mQueue.allowCoreThreadTimeOut(true);
 	}
 
 	public abstract Bitmap getBitmap(final T id);

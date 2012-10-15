@@ -16,11 +16,6 @@
 
 package me.abitno.utils;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.widget.ImageView;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -30,6 +25,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.widget.ImageView;
 
 /**
  * A subclass of {@link ImageWorker} that fetches images from a URL.
@@ -89,11 +89,11 @@ public class ImageFetcher extends ImageWorker {
 	public void loadImage(String key, ImageView imageView) {
 		loadImage(new ImageData(key, ImageData.IMAGE_TYPE_NORMAL), imageView, mLoadingBitmap);
 	}
-	
+
 	public void loadLocalImage(String key, ImageView imageView) {
 		loadImage(new ImageData(key, ImageData.IMAGE_TYPE_LOCAL), imageView, mLoadingBitmap);
 	}
-	
+
 	public void setParams(ImageFetcherParams params) {
 		mFetcherParams = params;
 	}
@@ -166,8 +166,6 @@ public class ImageFetcher extends ImageWorker {
 	 * @return A File pointing to the fetched bitmap
 	 */
 	public static byte[] downloadBitmapToMemory(Context context, String urlString, int maxBytes) {
-
-		disableConnectionReuseIfNecessary();
 		HttpURLConnection urlConnection = null;
 		ByteArrayOutputStream out = null;
 		InputStream in = null;
@@ -230,7 +228,6 @@ public class ImageFetcher extends ImageWorker {
 
 		Log.d(TAG, "downloadBitmap - downloading - " + urlString);
 
-		disableConnectionReuseIfNecessary();
 		HttpURLConnection urlConnection = null;
 		BufferedOutputStream out = null;
 
@@ -269,7 +266,6 @@ public class ImageFetcher extends ImageWorker {
 
 		return null;
 	}
-	
 
 	/**
 	 * Decode and sample down a bitmap from a file to the requested width and
@@ -344,28 +340,6 @@ public class ImageFetcher extends ImageWorker {
 			}
 		}
 		return inSampleSize;
-	}
-
-	/**
-	 * Workaround for bug pre-Froyo, see here for more info:
-	 * http://android-developers.blogspot.com/2011/09/androids-http-clients.html
-	 */
-	public static void disableConnectionReuseIfNecessary() {
-		// HTTP connection reuse which was buggy pre-froyo
-		if (hasHttpConnectionBug()) {
-			System.setProperty("http.keepAlive", "false");
-		}
-	}
-
-	/**
-	 * Check if OS version has a http URLConnection bug. See here for more
-	 * information:
-	 * http://android-developers.blogspot.com/2011/09/androids-http-clients.html
-	 * 
-	 * @return true if this OS version is affected, false otherwise
-	 */
-	public static boolean hasHttpConnectionBug() {
-		return !UIUtils.hasFroyo();
 	}
 
 	public static class ImageFetcherParams {
