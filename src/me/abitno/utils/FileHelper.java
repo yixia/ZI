@@ -163,21 +163,23 @@ public class FileHelper {
 		if (!StringUtils.isBlank(url)) {
 			int slashIndex = url.lastIndexOf('/');
 			if (slashIndex > -1) {
-				String filename = url.substring(slashIndex + 1);
-				int dotIndex = filename.indexOf('.');
-				int paramIndex = filename.indexOf('?');
+				String fileName = url.substring(slashIndex + 1);
+				int dotIndex = fileName.indexOf('.');
+				int paramIndex = fileName.indexOf('?');
 				if (dotIndex != -1) {
 					if (paramIndex == -1) {
-						paramIndex = filename.indexOf('&');
+						paramIndex = fileName.indexOf('&');
 						if (paramIndex == -1)
-							return filename.substring(dotIndex + 1)
+							return fileName.substring(dotIndex + 1)
 									.toLowerCase();
 						else
-							return filename.substring(dotIndex + 1, paramIndex)
+							return fileName.substring(dotIndex + 1, paramIndex)
 									.toLowerCase();
 					} else
-						return filename.substring(dotIndex + 1, paramIndex)
-								.toLowerCase();
+						if (paramIndex <= (fileName.length() - 1) ) {
+							return fileName.substring(dotIndex + 1, paramIndex)
+									.toLowerCase();
+						}
 				}
 			}
 
