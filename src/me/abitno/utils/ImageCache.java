@@ -16,6 +16,13 @@
 
 package me.abitno.utils;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+import me.abitno.zi.BuildConfig;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -26,19 +33,10 @@ import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.StatFs;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.util.LruCache;
-
-import me.abitno.zi.BuildConfig;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 /**
  * This class holds our bitmap caches (memory and disk).
@@ -333,12 +331,8 @@ public class ImageCache {
 	 * @return True if external storage is removable (like an SD card), false
 	 * otherwise.
 	 */
-	@TargetApi(Build.VERSION_CODES.GINGERBREAD)
 	public static boolean isExternalStorageRemovable() {
-		if (UIUtils.hasGingerbread()) {
-			return Environment.isExternalStorageRemovable();
-		}
-		return true;
+		return Environment.isExternalStorageRemovable();
 	}
 
 	/**
@@ -348,16 +342,7 @@ public class ImageCache {
 	 * @return The external cache dir
 	 */
 	public static File getExternalCacheDir(Context context) {
-		if (hasExternalCacheDir()) {
-			File cacheDir = context.getExternalCacheDir();
-			if (cacheDir != null) {
-				return cacheDir;
-			}
-		}
-
-		// Before Froyo we need to construct the external cache dir ourselves
-		final String cacheDir = "/Android/data/" + context.getPackageName() + "/cache/";
-		return new File(Environment.getExternalStorageDirectory().getPath() + cacheDir);
+		return context.getExternalCacheDir();
 	}
 
 	/**
@@ -366,20 +351,8 @@ public class ImageCache {
 	 * @param path The path to check
 	 * @return The space available in bytes
 	 */
-	@TargetApi(Build.VERSION_CODES.GINGERBREAD)
 	public static long getUsableSpace(File path) {
-		if (UIUtils.hasGingerbread()) {
-			return path.getUsableSpace();
-		}
-		final StatFs stats = new StatFs(path.getPath());
-		return (long) stats.getBlockSize() * (long) stats.getAvailableBlocks();
-	}
-
-	/**
-	 * Check if OS version has built-in external cache dir method.
-	 */
-	public static boolean hasExternalCacheDir() {
-		return UIUtils.hasFroyo();
+		return path.getUsableSpace();
 	}
 
 	/**
