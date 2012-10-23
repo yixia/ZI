@@ -5,6 +5,7 @@
 package me.abitno.utils;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -28,15 +29,12 @@ public class UIUtils {
 	}
 
 	/**
-	 * return (context.getResources().getConfiguration().screenLayout &
-	 * Configuration.SCREENLAYOUT_SIZE_MASK) >=
-	 * Configuration.SCREENLAYOUT_SIZE_LARGE;
-	 * 
 	 * @param context
 	 * @return
 	 */
 	public static boolean isTablet(Context context) {
-		return false;
+		return (context.getResources().getConfiguration().screenLayout &
+				  Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
 	}
 
 	public static boolean isHoneycombTablet(Context context) {
