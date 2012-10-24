@@ -102,10 +102,16 @@ public class NetHelper {
 	public static String getStringResponse(Context c, String url, Map<String, String> headers) {
 		InputStreamReader isr = null;
 		BufferedReader in = null;
+		StringBuilder sb = new StringBuilder();
 		try {
 			isr = new InputStreamReader(AndroidHttpClient.getUngzippedContent(getResponse(c, url, headers).getEntity()));
 			in = new BufferedReader(isr);
-			return in.readLine();
+			String line = in.readLine();
+			while (line != null) {
+				sb.append(line);
+				line = in.readLine();
+			}
+			return sb.toString();
 		} catch (Exception e) {
 			Log.e("getStringResponse#" + url, e);
 			return "";
