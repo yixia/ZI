@@ -16,9 +16,9 @@
      limitations under the License.
 -->
 
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="Theme.vplayer" parent="@style/Theme.Sherlock.Light.ForceOverflow" >
+    <style name="Theme.vplayer" parent="@style/Theme.Sherlock.Light.ForceOverflow">
         <item name="android:displayOptions">showHome|homeAsUp|showTitle</item>
         <item name="displayOptions">showHome|homeAsUp|showTitle</item>
         <item name="actionBarItemBackground">@drawable/selectable_background_vplayer</item>
@@ -26,25 +26,27 @@
         <item name="dropDownListViewStyle">@style/vplayer_DropDownListView</item>
         <item name="actionBarTabStyle">@style/vplayer_ActionBarTabStyle</item>
         <item name="actionDropDownStyle">@style/vplayer_DropDownNav</item>
-        <item name="actionBarStyle">@style/vplayer_transparent_ActionBar</item>
-
+        <item name="actionBarStyle">@style/vplayer_solid_ActionBar</item>
+        <item name="actionBarTabBarStyle">@style/vplayer_ActionBarTabBarStyle</item>
+        
         <item name="android:actionBarItemBackground">@drawable/selectable_background_vplayer</item>
         <item name="android:popupMenuStyle">@style/vplayer_PopupMenu</item>
         <item name="android:dropDownListViewStyle">@style/vplayer_DropDownListView</item>
         <item name="android:actionBarTabStyle">@style/vplayer_ActionBarTabStyle</item>
+        <item name="android:actionBarTabBarStyle">@style/vplayer_ActionBarTabBarStyle</item>
         <item name="android:actionDropDownStyle">@style/vplayer_DropDownNav</item>
-        <item name="android:actionBarStyle">@style/vplayer_transparent_ActionBar</item>
+        <item name="android:actionBarStyle">@style/vplayer_solid_ActionBar</item>
         <item name="android:panelBackground">@drawable/menu_hardkey_panel_vplayer</item>
         
     </style>
 
     <style name="vplayer_solid_ActionBar" parent="@style/Widget.Sherlock.Light.ActionBar.Solid">
-        <item name="background">@drawable/ab_solid_vplayer</item>
+        <item name="background">@drawable/ab_transparent_vplayer</item>
         <item name="backgroundStacked">@drawable/ab_stacked_solid_vplayer</item>
         <item name="backgroundSplit">@drawable/ab_bottom_solid_vplayer</item>
         <item name="progressBarStyle">@style/vplayer_ProgressBar</item>
 
-        <item name="android:background">@drawable/ab_solid_vplayer</item>
+        <item name="android:background">@drawable/ab_transparent_vplayer</item>
         <item name="android:backgroundStacked">@drawable/ab_stacked_solid_vplayer</item>
         <item name="android:backgroundSplit">@drawable/ab_bottom_solid_vplayer</item>
         <item name="android:progressBarStyle">@style/vplayer_ProgressBar</item>
@@ -57,21 +59,24 @@
         <item name="android:background">@drawable/ab_transparent_vplayer</item>
         <item name="android:progressBarStyle">@style/vplayer_ProgressBar</item>
     </style>
-    
-    <style name="vplayer_PopupMenu" parent="@style/Widget.Sherlock.Light.ListPopupWindow">  
-        <item name="android:popupBackground">@drawable/menu_dropdown_panel_vplayer</item>   
+	
+    <style name="vplayer_PopupMenu" parent="@style/Widget.Sherlock.Light.ListPopupWindow">	
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_vplayer</item>	
     </style>
-    
+	
     <style name="vplayer_DropDownListView" parent="@style/Widget.Sherlock.Light.ListView.DropDown">
         <item name="android:listSelector">@drawable/selectable_background_vplayer</item>
     </style>
 
     <style name="vplayer_ActionBarTabStyle" parent="@style/Widget.Sherlock.Light.ActionBar.TabView">
         <item name="background">@drawable/tab_indicator_ab_vplayer</item>
-
         <item name="android:background">@drawable/tab_indicator_ab_vplayer</item>
     </style>
     
+    <style name="vplayer_ActionBarTabBarStyle" parent="style/Widget.Sherlock.Light.ActionBar.TabBar">
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+	
     <style name="vplayer_DropDownNav" parent="@style/Widget.Sherlock.Light.Spinner.DropDown.ActionBar">
         <item name="background">@drawable/spinner_background_ab_vplayer</item>
 
