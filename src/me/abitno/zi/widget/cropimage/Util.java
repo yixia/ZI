@@ -16,7 +16,6 @@
 
 package me.abitno.zi.widget.cropimage;
 
-import java.io.Closeable;
 import java.io.IOException;
 
 import android.app.ProgressDialog;
@@ -37,6 +36,7 @@ import android.view.View.OnClickListener;
  * Collection of utility functions used in this package.
  */
 public class Util {
+	
 	private static OnClickListener sNullOnClickListener;
 
 	private Util() {
@@ -201,34 +201,7 @@ public class Util {
 		return bitmap;
 	}
 
-	public static <T> int indexOf(T[] array, T s) {
-		for (int i = 0; i < array.length; i++) {
-			if (array[i].equals(s)) {
-				return i;
-			}
-		}
-		return -1;
-	}
-
-	public static void closeSilently(Closeable c) {
-		if (c == null)
-			return;
-		try {
-			c.close();
-		} catch (Throwable t) {
-			// do nothing
-		}
-	}
-
-	public static void closeSilently(ParcelFileDescriptor c) {
-		if (c == null)
-			return;
-		try {
-			c.close();
-		} catch (Throwable t) {
-			// do nothing
-		}
-	}
+	
 
 	/**
 	 * Make a bitmap from a given Uri.
