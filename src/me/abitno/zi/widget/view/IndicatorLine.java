@@ -29,7 +29,7 @@ public class IndicatorLine extends View {
 	private void init() {
 		DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
 		int width = displayMetrics.widthPixels;
-		mItemWidth = width / 4;
+		mItemWidth = width / 3;
 
 	}
 
