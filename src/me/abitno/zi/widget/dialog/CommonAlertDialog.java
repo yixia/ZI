@@ -87,8 +87,9 @@ public class CommonAlertDialog extends Dialog implements android.view.View.OnCli
 	@Override
 	public void onClick(View v) {
 		dismiss();
-		if (mOnDialogItemClick != null)
+		if (mOnDialogItemClick != null && v.getId() == R.id.btn_ok) {
 			mOnDialogItemClick.onConfirmClick(v);
+		}
 	}
 
 	public interface OnDialogItemClick {
