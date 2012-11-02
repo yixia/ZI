@@ -1,5 +1,7 @@
 package me.abitno.utils;
 
+import android.text.TextUtils;
+
 import java.util.Arrays;
 import java.util.Iterator;
 
@@ -61,6 +63,6 @@ public class StringUtils {
 	}
 
 	public static boolean isBlank(String s) {
-		return s == null || s.trim().equals("");
+		return TextUtils.isEmpty(s);
 	}
 }

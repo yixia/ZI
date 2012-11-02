@@ -15,5 +15,4 @@
     <string name="cropimage_storage_preparing">Preparing card</string>
     <string name="cropimage_storage_not_available">No storage card</string>
     <string name="cropimage_storage_no_space">Not enough space</string>
-	<string name="video_layout_loading">Loading…</string>
 </resources>

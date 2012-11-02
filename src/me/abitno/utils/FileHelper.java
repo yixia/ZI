@@ -27,8 +27,7 @@ public class FileHelper {
 			File[] files = f.listFiles();
 			if (files != null) {
 				for (File file : files) {
-					if (file.exists() && !file.isDirectory() && file.canRead()
-							&& Media.isVideoOrAudio(file))
+					if (file.exists() && !file.isDirectory() && file.canRead() && Media.isVideoOrAudio(file))
 						file.delete();
 				}
 			}
@@ -49,32 +48,28 @@ public class FileHelper {
 		}
 	}
 
-	public static File[] listFilesAccordingPref(File f,
-			final boolean hiddenShown, final boolean mediaOnly) {
+	public static File[] listFilesAccordingPref(File f, final boolean hiddenShown) {
 		return f.listFiles(new FilenameFilter() {
 			@Override
 			public boolean accept(File dir, String filename) {
 				if (filename == null)
 					return false;
 				File f = new File(dir, filename);
-				if (!f.canRead() || !hiddenShown && f.isHidden() || mediaOnly
-						&& !f.isDirectory() && !Media.isVideoOrAudio(f))
+				if (!f.canRead() || !hiddenShown && f.isHidden())
 					return false;
 				return true;
 			}
 		});
 	}
 
-	public static File[] listSubtrackFilesAccordingPref(File f,
-			final boolean hiddenShown) {
+	public static File[] listSubtrackFilesAccordingPref(File f, final boolean hiddenShown) {
 		return f.listFiles(new FilenameFilter() {
 			@Override
 			public boolean accept(File dir, String filename) {
 				if (filename == null)
 					return false;
 				File f = new File(dir, filename);
-				if (!f.canRead() || !hiddenShown && f.isHidden()
-						|| !Media.isSubTrack(f) && !f.isDirectory())
+				if (!f.canRead() || !hiddenShown && f.isHidden() || !Media.isSubTrack(f) && !f.isDirectory())
 					return false;
 				return true;
 			}
@@ -112,8 +107,7 @@ public class FileHelper {
 		Arrays.sort(files, new Comparator<File>() {
 			@Override
 			public int compare(File f1, File f2) {
-				if (f1.isDirectory() && f2.isDirectory() || f1.isFile()
-						&& f2.isFile())
+				if (f1.isDirectory() && f2.isDirectory() || f1.isFile() && f2.isFile())
 					return Long.valueOf(f2.length()).compareTo(f1.length());
 				else if (f1.isDirectory() && f2.isFile())
 					return -1;
@@ -127,10 +121,8 @@ public class FileHelper {
 		Arrays.sort(files, new Comparator<File>() {
 			@Override
 			public int compare(File f1, File f2) {
-				if (f1.isDirectory() && f2.isDirectory() || f1.isFile()
-						&& f2.isFile())
-					return f1.getName().trim()
-							.compareToIgnoreCase(f2.getName().trim());
+				if (f1.isDirectory() && f2.isDirectory() || f1.isFile() && f2.isFile())
+					return f1.getName().trim().compareToIgnoreCase(f2.getName().trim());
 				else if (f1.isDirectory() && f2.isFile())
 					return -1;
 				else
@@ -163,21 +155,19 @@ public class FileHelper {
 		if (!StringUtils.isBlank(url)) {
 			int slashIndex = url.lastIndexOf('/');
 			if (slashIndex > -1) {
-				String filename = url.substring(slashIndex + 1);
-				int dotIndex = filename.indexOf('.');
-				int paramIndex = filename.indexOf('?');
+				String fileName = url.substring(slashIndex + 1);
+				int dotIndex = fileName.indexOf('.');
+				int paramIndex = fileName.indexOf('?');
 				if (dotIndex != -1) {
 					if (paramIndex == -1) {
-						paramIndex = filename.indexOf('&');
+						paramIndex = fileName.indexOf('&');
 						if (paramIndex == -1)
-							return filename.substring(dotIndex + 1)
-									.toLowerCase();
+							return fileName.substring(dotIndex + 1).toLowerCase();
 						else
-							return filename.substring(dotIndex + 1, paramIndex)
-									.toLowerCase();
-					} else
-						return filename.substring(dotIndex + 1, paramIndex)
-								.toLowerCase();
+							return fileName.substring(dotIndex + 1, paramIndex).toLowerCase();
+					} else if (paramIndex <= (fileName.length() - 1)) {
+						return fileName.substring(dotIndex + 1, paramIndex).toLowerCase();
+					}
 				}
 			}
 
@@ -196,10 +186,7 @@ public class FileHelper {
 	}
 
 	public static boolean sdAvailable() {
-		return Environment.MEDIA_MOUNTED_READ_ONLY.equals(Environment
-				.getExternalStorageState())
-				|| Environment.MEDIA_MOUNTED.equals(Environment
-						.getExternalStorageState());
+		return Environment.MEDIA_MOUNTED_READ_ONLY.equals(Environment.getExternalStorageState()) || Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
 	}
 
 	public static String getFileNameForTitle(String title) {

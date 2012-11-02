@@ -5,6 +5,7 @@
 package me.abitno.utils;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -27,16 +28,12 @@ public class UIUtils {
 		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH;
 	}
 
-	/**
-	 * return (context.getResources().getConfiguration().screenLayout &
-	 * Configuration.SCREENLAYOUT_SIZE_MASK) >=
-	 * Configuration.SCREENLAYOUT_SIZE_LARGE;
-	 * 
-	 * @param context
-	 * @return
-	 */
+	public static boolean hasJellyBean() {
+		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
+	}
+
 	public static boolean isTablet(Context context) {
-		return false;
+		return (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
 	}
 
 	public static boolean isHoneycombTablet(Context context) {
