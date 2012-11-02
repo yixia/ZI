@@ -26,16 +26,30 @@ public class CommonAlertDialog extends Dialog implements android.view.View.OnCli
 	private String mCancelText;
 	private OnDialogItemClick mOnDialogItemClick;
 	private TextView mSummary;
-
+	
+	public CommonAlertDialog(Context context, int theme, int title, int titleIcon, String description, int okText, int cancelText, OnDialogItemClick onDialogItemClick) {
+		super(context, theme);
+		this.mContext = context;
+		this.mTitle = context.getString(title);
+		if (titleIcon != 0) 
+			this.mTitleIcon = context.getResources().getDrawable(titleIcon);
+		this.mDescription = description;
+		this.mOkText = context.getString(okText);
+		if (cancelText != 0) {
+			this.mCancelText = context.getString(cancelText);
+		}
+		this.mOnDialogItemClick = onDialogItemClick;
+	}
+	
 	public CommonAlertDialog(Context context, int theme, String title, Drawable titleIcon, String description, String okText, String cancelText, OnDialogItemClick onDialogItemClick) {
 		super(context, theme);
+		this.mContext = context;
 		this.mTitle = title;
+		this.mTitleIcon = titleIcon;
 		this.mDescription = description;
 		this.mOkText = okText;
 		this.mCancelText = cancelText;
-		this.mContext = context;
 		this.mOnDialogItemClick = onDialogItemClick;
-		this.mTitleIcon = titleIcon;
 	}
 
 	public CommonAlertDialog(Context context, int theme, String title, String description, String okText, String cancelText, OnDialogItemClick onDialogItemClick) {

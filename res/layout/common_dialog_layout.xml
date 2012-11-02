@@ -22,7 +22,8 @@
             android:maxLines="15"
             android:scrollbars="vertical"
             android:singleLine="false"
-            android:textColor="#4e4d4d"
+            android:lineSpacingMultiplier="1.2"
+            android:textColor="#777777"
             android:textSize="16sp" />
 
         <LinearLayout
