@@ -12,6 +12,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.support.v4.app.FragmentActivity;
+import android.util.TypedValue;
 
 /**
  * 
@@ -72,5 +73,11 @@ public class UIUtils {
       activity.finish();
       activity.startActivity(new Intent(activity, activity.getClass()));  
   }  
-
+  
+  
+  public static TypedValue getAttrValue(Activity activity, int attrId) {
+		TypedValue typedValue = new TypedValue(); 
+		activity.getTheme().resolveAttribute(attrId, typedValue, true);
+		return typedValue;
+  }
 }
