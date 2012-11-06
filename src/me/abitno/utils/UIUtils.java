@@ -4,7 +4,9 @@
 
 package me.abitno.utils;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -60,5 +62,15 @@ public class UIUtils {
 		fetcher.setImageCache(ImageCache.findOrCreateCache(activity, "imageFetcher"));
 		return fetcher;
 	}
+	
+	/** 
+   * Set the theme of the Activity, and restart it by creating a new Activity 
+   * of the same type. 
+   */  
+  public static void changeToTheme(Activity activity)  
+  {  
+      activity.finish();
+      activity.startActivity(new Intent(activity, activity.getClass()));  
+  }  
 
 }
