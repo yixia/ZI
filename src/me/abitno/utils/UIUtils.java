@@ -4,12 +4,15 @@
 
 package me.abitno.utils;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.support.v4.app.FragmentActivity;
+import android.util.TypedValue;
 
 /**
  * 
@@ -55,5 +58,21 @@ public class UIUtils {
 		fetcher.setImageCache(ImageCache.findOrCreateCache(activity, "imageFetcher"));
 		return fetcher;
 	}
-
+	
+	/** 
+   * Set the theme of the Activity, and restart it by creating a new Activity 
+   * of the same type. 
+   */  
+  public static void changeToTheme(Activity activity)  
+  {  
+      activity.finish();
+      activity.startActivity(new Intent(activity, activity.getClass()));  
+  }  
+  
+  
+  public static TypedValue getAttrValue(Activity activity, int attrId) {
+		TypedValue typedValue = new TypedValue(); 
+		activity.getTheme().resolveAttribute(attrId, typedValue, true);
+		return typedValue;
+  }
 }
