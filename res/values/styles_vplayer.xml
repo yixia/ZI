@@ -18,7 +18,7 @@
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="Theme.vplayer" parent="@style/Theme.Sherlock.Light.ForceOverflow">
+    <style name="Theme.vplayer_light" parent="@style/Theme.Sherlock.Light.ForceOverflow">
         <item name="android:displayOptions">showHome|homeAsUp|showTitle</item>
         <item name="displayOptions">showHome|homeAsUp|showTitle</item>
         <item name="actionBarItemBackground">@drawable/selectable_background_vplayer</item>
