@@ -19,7 +19,6 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="Theme.vplayer_light" parent="@style/Theme.Sherlock.Light.ForceOverflow">
-        <item name="android:displayOptions">showHome|homeAsUp|showTitle</item>
         <item name="displayOptions">showHome|homeAsUp|showTitle</item>
         <item name="actionBarItemBackground">@drawable/selectable_background_vplayer</item>
         <item name="popupMenuStyle">@style/vplayer_PopupMenu</item>
@@ -29,6 +28,7 @@
         <item name="actionBarStyle">@style/vplayer_solid_ActionBar</item>
         <item name="actionBarTabBarStyle">@style/vplayer_ActionBarTabBarStyle</item>
         
+        <item name="android:displayOptions">showHome|homeAsUp|showTitle</item>
         <item name="android:actionBarItemBackground">@drawable/selectable_background_vplayer</item>
         <item name="android:popupMenuStyle">@style/vplayer_PopupMenu</item>
         <item name="android:dropDownListViewStyle">@style/vplayer_DropDownListView</item>
