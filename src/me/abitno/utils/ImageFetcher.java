@@ -93,6 +93,10 @@ public class ImageFetcher extends ImageWorker {
 	public void loadLocalImage(String key, ImageView imageView) {
 		loadImage(new ImageData(key, ImageData.IMAGE_TYPE_LOCAL), imageView, mLoadingBitmap);
 	}
+	
+	public void loadLocalImage(String key, ImageView imageView, int resId) {
+		loadImage(new ImageData(key, ImageData.IMAGE_TYPE_LOCAL), imageView, resId);
+	}
 
 	public void setParams(ImageFetcherParams params) {
 		mFetcherParams = params;
