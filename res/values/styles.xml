@@ -55,7 +55,6 @@
 		<item name="android:gravity">left|center_vertical</item>
 	</style>
 	<style name="Widget.ZI.CheckBox" parent="android:Widget.CompoundButton.CheckBox">
-		<item name="android:background">@drawable/btn_check_label_background</item>
 		<item name="android:button">@drawable/btn_check_holo_dark</item>
 	</style>
 
