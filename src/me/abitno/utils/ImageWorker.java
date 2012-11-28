@@ -351,7 +351,9 @@ public abstract class ImageWorker {
 	 * Called when the processing is complete and the final bitmap should be set
 	 * on the ImageView.
 	 */
-	private void setImageBitmap(ImageView imageView, Bitmap bitmap) {
+	
+  @SuppressWarnings("deprecation")
+  private void setImageBitmap(ImageView imageView, Bitmap bitmap) {
 		if (mFadeInBitmap) {
 			// Use TransitionDrawable to fade in.
 			final TransitionDrawable td = new TransitionDrawable(new Drawable[] { new ColorDrawable(android.R.color.transparent), new BitmapDrawable(mContext.getResources(), bitmap) });
