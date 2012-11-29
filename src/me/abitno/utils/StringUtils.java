@@ -2,6 +2,8 @@ package me.abitno.utils;
 
 import android.text.TextUtils;
 
+import net.sourceforge.pinyin4j.PinyinHelper;
+
 import java.util.Arrays;
 import java.util.Iterator;
 
@@ -61,6 +63,21 @@ public class StringUtils {
 
 		return hours > 0 ? String.format("%02d:%02d:%02d", hours, minutes, seconds) : String.format("%02d:%02d", minutes, seconds);
 	}
+	
+	public static String generateKey(String seq) {
+		StringBuffer letters = new StringBuffer(seq.length());
+		char[] chars = seq.toCharArray();
+		for (int i = 0; i < chars.length; i++) {
+			String[] pinYin = PinyinHelper.toHanyuPinyinStringArray(chars[i]);
+			if (null == pinYin || "none0".equals(pinYin[0])) {
+				letters.append(chars[i]);
+			} else {
+				letters.append(pinYin[0].charAt(0));
+			}
+		}
+		return letters.toString().toLowerCase();
+	}
+
 
 	public static boolean isBlank(String s) {
 		return TextUtils.isEmpty(s);

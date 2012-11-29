@@ -160,7 +160,8 @@ public class QuickAction extends PopupWindows {
 	 * anchor view.
 	 * 
 	 */
-	public void show(View anchor, int x, int y) {
+	@SuppressWarnings("deprecation")
+  public void show(View anchor, int x, int y) {
 		preShow();
 
 		int xPos, yPos;

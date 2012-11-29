@@ -146,7 +146,7 @@ public class CropImage extends MonitoredActivity {
 
 		findViewById(R.id.rotateLeft).setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				mBitmap = Util.rotateImage(mBitmap, -90);
+				mBitmap = BitmapUtils.rotateImage(mBitmap, -90);
 				RotateBitmap rotateBitmap = new RotateBitmap(mBitmap);
 				mImageView.setImageRotateBitmapResetBase(rotateBitmap, true);
 				mRunFaceDetection.run();
@@ -155,7 +155,7 @@ public class CropImage extends MonitoredActivity {
 
 		findViewById(R.id.rotateRight).setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				mBitmap = Util.rotateImage(mBitmap, 90);
+				mBitmap = BitmapUtils.rotateImage(mBitmap, 90);
 				RotateBitmap rotateBitmap = new RotateBitmap(mBitmap);
 				mImageView.setImageRotateBitmapResetBase(rotateBitmap, true);
 				mRunFaceDetection.run();
@@ -209,7 +209,7 @@ public class CropImage extends MonitoredActivity {
 
 		mImageView.setImageBitmapResetBase(mBitmap, true);
 
-		Util.startBackgroundJob(this, null, getString(R.string.cropimage_waiting), new Runnable() {
+		BitmapUtils.startBackgroundJob(this, null, getString(R.string.cropimage_waiting), new Runnable() {
 			public void run() {
 				final CountDownLatch latch = new CountDownLatch(1);
 				final Bitmap b = (mImage != null) ? mImage.fullSizeBitmap(IImage.UNCONSTRAINED, 1024 * 1024) : mBitmap;
@@ -281,7 +281,7 @@ public class CropImage extends MonitoredActivity {
 			if (mScale) {
 				/* Scale the image to the required dimensions */
 				Bitmap old = croppedImage;
-				croppedImage = Util.transform(new Matrix(), croppedImage, mOutputX, mOutputY, mScaleUp);
+				croppedImage = BitmapUtils.transform(new Matrix(), croppedImage, mOutputX, mOutputY, mScaleUp);
 				if (old != croppedImage) {
 					old.recycle();
 				}
@@ -373,7 +373,7 @@ public class CropImage extends MonitoredActivity {
 			}.execute(croppedImage);
 		} else {
 			final Bitmap b = croppedImage;
-			Util.startBackgroundJob(this, null, getString(R.string.cropimage_image_saving), new Runnable() {
+			BitmapUtils.startBackgroundJob(this, null, getString(R.string.cropimage_image_saving), new Runnable() {
 				public void run() {
 					saveOutput(b);
 				}

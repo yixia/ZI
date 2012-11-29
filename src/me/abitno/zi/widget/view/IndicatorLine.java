@@ -11,7 +11,8 @@ import me.abitno.zi.R;
 
 
 public class IndicatorLine extends View {
-
+	
+	private static final int AVERAGE = 3;
 	private final Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 	private int mCurrentItem = 0;
 	private int mItemWidth;
@@ -29,7 +30,7 @@ public class IndicatorLine extends View {
 	private void init() {
 		DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
 		int width = displayMetrics.widthPixels;
-		mItemWidth = width / 3;
+		mItemWidth = width / AVERAGE;
 
 	}
 
