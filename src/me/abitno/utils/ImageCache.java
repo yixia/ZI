@@ -16,13 +16,6 @@
 
 package me.abitno.utils;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
-import me.abitno.zi.BuildConfig;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -37,6 +30,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.util.LruCache;
+
+import me.abitno.zi.BuildConfig;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * This class holds our bitmap caches (memory and disk).

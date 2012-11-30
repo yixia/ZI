@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
+@Deprecated
 public class Gallery extends android.widget.Gallery {
 
 	public Gallery(Context context) {
