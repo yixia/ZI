@@ -14,7 +14,7 @@ import android.util.AndroidException;
 import me.abitno.utils.AndroidContextUtils;
 import me.abitno.utils.CPU;
 import me.abitno.utils.Log;
-import me.abitno.utils.Utils;
+import me.abitno.utils.IOUtils;
 
 import java.io.File;
 import java.io.FileReader;
@@ -167,7 +167,7 @@ public class VitamioInstaller {
 				} catch (IOException e) {
 					Log.e("isNativeLibsInited", e);
 				} finally {
-					Utils.closeSilently(fr);
+					IOUtils.closeSilently(fr);
 				}
 			}
 		}
