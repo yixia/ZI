@@ -23,7 +23,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.concurrent.CountDownLatch;
 
-import me.abitno.utils.Utils;
+import me.abitno.utils.IOUtils;
 import me.abitno.zi.R;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -393,7 +393,7 @@ public class CropImage extends MonitoredActivity {
 				// TODO: report error to caller
 				Log.e(TAG, "Cannot open file: " + mSaveUri, ex);
 			} finally {
-				Utils.closeSilently(outputStream);
+				IOUtils.closeSilently(outputStream);
 			}
 			Bundle extras = new Bundle();
 			setResult(RESULT_OK, new Intent(mSaveUri.toString()).putExtras(extras));

@@ -6,19 +6,10 @@ import android.util.Log;
 
 import java.io.Closeable;
 
-public class Utils {
+public class IOUtils {
 	
-	private static final String TAG = "Utils";
+	private static final String TAG = "IOUtils";
 	
-	public static <T> int indexOf(T[] array, T s) {
-		for (int i = 0; i < array.length; i++) {
-			if (array[i].equals(s)) {
-				return i;
-			}
-		}
-		return -1;
-	}
-
 	public static void closeSilently(Closeable c) {
 		if (c == null)
 			return;
