@@ -52,7 +52,7 @@ public class NetHelper {
 		HttpPost request = new HttpPost();
 		request.setHeader("Accept-Encoding", "gzip");
 		if (c != null) {
-			request.setHeader("User-Agent", "VPlayer/" + AndroidContextUtils.getVersionCode(c));
+			request.setHeader("User-Agent", "VPlayer/" + ContextUtils.getVersionCode(c));
 		}
 		if (headers != null) {
 			for (String h : headers.keySet())
@@ -75,7 +75,7 @@ public class NetHelper {
 		HttpGet request = new HttpGet();
 		request.setHeader("Accept-Encoding", "gzip");
 		if (c != null) {
-			request.setHeader("User-Agent", "VPlayer/" + AndroidContextUtils.getVersionCode(c));
+			request.setHeader("User-Agent", "VPlayer/" + ContextUtils.getVersionCode(c));
 		}
 		if (headers != null) {
 			for (String h : headers.keySet())

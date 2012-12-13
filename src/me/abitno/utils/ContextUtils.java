@@ -3,7 +3,7 @@ package me.abitno.utils;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 
-public class AndroidContextUtils {
+public class ContextUtils {
 	public static int getVersionCode(Context ctx) {
 		int version = 0;
 		try {
