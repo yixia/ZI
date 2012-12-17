@@ -9,7 +9,6 @@ import android.view.View;
 
 import com.yixia.zi.R;
 
-
 public class IndicatorLine extends View {
 	
 	private static final int AVERAGE = 3;
