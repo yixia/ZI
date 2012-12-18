@@ -29,6 +29,10 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.text.TextUtils;
 
+/**
+ * When using, need to change the value ot AUTHORITY 
+ *
+ */
 public class PreferenceProvider extends ContentProvider {
 	public static final String AUTHORITY = "me.abitno.zi.provider.preference";
 	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/preferences");
