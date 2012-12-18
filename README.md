@@ -13,6 +13,7 @@ ZI Library for wonderful Android development
 * See the LICENSE declaration in each source file.
 
 3) Components
+-------------
 
 * ProviderPreference, shared preferences accross processes built on ContentProvider
 
