@@ -6,4 +6,6 @@
 	<color name="btn_selected_color">#028b85</color>
 	<color name="theme_color">#53c1bd</color>
 	<color name="indicator_color">#33ccc5</color>
+	<color name="pin_progress_default_circle_color">#80ffffff</color>
+    <color name="pin_progress_default_progress_color">#68cec9</color>
 </resources>
