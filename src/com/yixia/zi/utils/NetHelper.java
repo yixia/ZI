@@ -132,18 +132,36 @@ public class NetHelper {
 			return "";
 		} finally {
 			if (in != null) {
-				try {
-					in.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				IOUtils.closeSilently(in);
 			}
 			if (isr != null) {
-				try {
-					isr.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				IOUtils.closeSilently(isr);
+			}
+		}
+	}
+	
+	public static String getStringResponseThrowException(Context c, String url, Map<String, String> headers) throws Exception {
+		InputStreamReader isr = null;
+		BufferedReader in = null;
+		StringBuilder sb = new StringBuilder();
+		try {
+			isr = new InputStreamReader(AndroidHttpClient.getUngzippedContent(getResponse(c, url, headers).getEntity()));
+			in = new BufferedReader(isr);
+			String line = in.readLine();
+			while (line != null) {
+				sb.append(line);
+				line = in.readLine();
+			}
+			return sb.toString();
+		} catch (Exception e) {
+			Log.e("getStringResponse#" + url, e);
+			throw new Exception();
+		} finally {
+			if (in != null) {
+				IOUtils.closeSilently(in);
+			}
+			if (isr != null) {
+				IOUtils.closeSilently(isr);
 			}
 		}
 	}
