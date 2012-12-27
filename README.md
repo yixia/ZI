@@ -26,3 +26,7 @@ ZI Library for wonderful Android development
 * OutlineTextView, a TextView whose text has borders to increase readability
 
 * Styles and themes based on Android Holo theme, available for all Android versions
+
+* Crouton backport from keyboardsurfer [Crouton][1]
+
+[1]: https://github.com/keyboardsurfer/Crouton.git
