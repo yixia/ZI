@@ -29,4 +29,7 @@ ZI Library for wonderful Android development
 
 * Crouton backport from keyboardsurfer [Crouton][1]
 
-[1]: https://github.com/keyboardsurfer/Crouton.git
+* HttpRequest, A simple convenience library for using a HttpURLConnection to make requests and access the response, [detail][2]
+
+[1]: https://github.com/keyboardsurfer/Crouton
+[2]: https://github.com/kevinsawicki/http-request
