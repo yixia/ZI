@@ -171,7 +171,15 @@ public class ImageResizer extends ImageWorker {
 
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
-        return BitmapFactory.decodeFileDescriptor(fileDescriptor, null, options);
+        Bitmap bitmap = null;
+        try {
+        	bitmap = BitmapFactory.decodeFileDescriptor(fileDescriptor, null, options);
+        } catch (OutOfMemoryError e) {
+        	if (BuildConfig.DEBUG) {
+            Log.d(TAG, "OutOfMemoryError - " + e.toString());
+        	}
+        }
+        return bitmap;
     }
 
     /**
