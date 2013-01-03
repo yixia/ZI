@@ -29,7 +29,9 @@ ZI Library for wonderful Android development
 
 * Crouton backport from keyboardsurfer [Crouton][1]
 
-* HttpRequest, A simple convenience library for using a HttpURLConnection to make requests and access the response, [detail][2]
+* HttpRequest, a simple convenience library for using a HttpURLConnection to make requests and access the response, [detail][2]
+
+* ImageFetcher, a asynchronous load remote and local image of use memery and disk lrucache
 
 [1]: https://github.com/keyboardsurfer/Crouton
 [2]: https://github.com/kevinsawicki/http-request
