@@ -97,7 +97,7 @@ public abstract class ImageWorker {
             // NOTE: This uses a custom version of AsyncTask that has been pulled from the
             // framework and slightly modified. Refer to the docs at the top of the class
             // for more info on what was changed.
-            task.executeOnExecutor(AsyncTask.DUAL_THREAD_EXECUTOR, data);
+            task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, data);
         }
     }
     
