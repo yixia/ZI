@@ -25,22 +25,22 @@ import android.os.Build;
 import android.support.v4.app.FragmentActivity;
 import android.util.TypedValue;
 
-import com.yixia.zi.utils.ImageCache.ImageCacheParams;
-
 /**
  * 
  * @author crossle
  */
 public class UIUtils {
 	
-	private static final String IMAGE_CACHE_DIR = "imageFetcher";
+	private static final String IMAGE_FETCHER = "imageFetcher";
 	
 	public static boolean hasFroyo() {
 		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO;
 	}
+
 	public static boolean hasGingerbread() {
 		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD;
 	}
+
 	public static boolean hasHoneycomb() {
 		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
 	}
@@ -56,7 +56,7 @@ public class UIUtils {
 	public static boolean hasJellyBean() {
 		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
 	}
-	
+
 	public static boolean hasJellyBeanMR1() {
 		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1;
 	}
@@ -79,30 +79,25 @@ public class UIUtils {
 	}
 
 	public static ImageFetcher getImageFetcher(final FragmentActivity activity) {
-		ImageCacheParams cacheParams = new ImageCacheParams(activity, IMAGE_CACHE_DIR);
-		// Set memory cache to 25% of mem class
-		cacheParams.setMemCacheSizePercent(activity, 0.25f);
-		// The ImageFetcher takes care of loading images into our ImageView children asynchronously
-		ImageFetcher imageFetcher = new ImageFetcher(activity);
-		imageFetcher.setImageFadeIn(true);
-		imageFetcher.addImageCache(activity.getSupportFragmentManager(), cacheParams);
-		return imageFetcher;
+		// The ImageFetcher takes care of loading remote images into our ImageView
+		ImageFetcher fetcher = new ImageFetcher(activity);
+		fetcher.setImageCache(ImageCache.findOrCreateCache(activity, IMAGE_FETCHER));
+		return fetcher;
 	}
-	
-	/** 
-   * Set the theme of the Activity, and restart it by creating a new Activity 
-   * of the same type. 
-   */  
-  public static void changeToTheme(Activity activity)  
-  {  
-      activity.finish();
-      activity.startActivity(new Intent(activity, activity.getClass()));  
-  }  
-  
-  
-  public static TypedValue getAttrValue(Activity activity, int attrId) {
-		TypedValue typedValue = new TypedValue(); 
+
+
+	/**
+	 * Set the theme of the Activity, and restart it by creating a new Activity of
+	 * the same type.
+	 */
+	public static void changeToTheme(Activity activity) {
+		activity.finish();
+		activity.startActivity(new Intent(activity, activity.getClass()));
+	}
+
+	public static TypedValue getAttrValue(Activity activity, int attrId) {
+		TypedValue typedValue = new TypedValue();
 		activity.getTheme().resolveAttribute(attrId, typedValue, true);
 		return typedValue;
-  }
+	}
 }

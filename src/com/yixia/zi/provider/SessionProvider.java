@@ -1,20 +1,5 @@
-/*
- * Copyright (C) 2011 Cedric Fung (wolfplanet@gmail.com)
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+package com.yixia.zi.provider;
 
-package com.yixia.zi.preference;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
@@ -30,12 +15,15 @@ import android.net.Uri;
 import android.text.TextUtils;
 
 /**
- * When using, must to change the value ot AUTHORITY 
- *
+ * 
+ *  When using, must to change the value of AUTHORITY
+ * 
  */
-public class PreferenceProvider extends ContentProvider {
-	public static final String AUTHORITY = "me.abitno.zi.provider.preference";
-	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/preferences");
+public class SessionProvider extends ContentProvider {
+	public static String AUTHORITY = "com.yixia.zi.provider.session";
+	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/sessions");
+	public static final String CONTENT_TYPE_SESSIONS = "vnd.android.cursor.dir/vnd.zi.sessions";
+	public static final String CONTENT_ITEM_TYPE_SESSION = "vnd.android.cursor.item/vnd.zi.session";
 	public static final String COL_ID = "_id";
 	public static final String COL_KEY = "key";
 	public static final String COL_VALUE = "value";
@@ -50,10 +38,10 @@ public class PreferenceProvider extends ContentProvider {
 	public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
 		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 		switch (URI_MATCHER.match(uri)) {
-		case PREFERENCES:
+		case SESSIONS:
 			qb.setTables(TB_NAME);
 			break;
-		case PREFERENCE_ID:
+		case SESSION_ID:
 			qb.setTables(TB_NAME);
 			qb.appendWhere(COL_ID + "=" + uri.getPathSegments().get(1));
 			break;
@@ -67,12 +55,20 @@ public class PreferenceProvider extends ContentProvider {
 
 	@Override
 	public String getType(Uri uri) {
-		return TYPE;
+		
+		switch (URI_MATCHER.match(uri)) {
+		case SESSIONS:
+			return CONTENT_TYPE_SESSIONS;
+		case SESSION_ID:
+			return CONTENT_ITEM_TYPE_SESSION;
+		default:
+			throw new IllegalArgumentException("Unknown URI " + uri);
+		}
 	}
 
 	@Override
 	public Uri insert(Uri uri, ContentValues values) {
-		boolean isPrefrences = URI_MATCHER.match(uri) == PREFERENCES;
+		boolean isPrefrences = URI_MATCHER.match(uri) == SESSIONS;
 		if (!isPrefrences)
 			throw new IllegalArgumentException("Unknown URI " + uri);
 
@@ -91,10 +87,10 @@ public class PreferenceProvider extends ContentProvider {
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
 		int count;
 		switch (URI_MATCHER.match(uri)) {
-		case PREFERENCES:
+		case SESSIONS:
 			count = db.delete(TB_NAME, selection, selectionArgs);
 			break;
-		case PREFERENCE_ID:
+		case SESSION_ID:
 			count = db.delete(TB_NAME, COL_ID + "=" + uri.getPathSegments().get(1) + (TextUtils.isEmpty(selection) ? "" : " AND (" + selection + ")"), selectionArgs);
 			break;
 		default:
@@ -110,10 +106,10 @@ public class PreferenceProvider extends ContentProvider {
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
 		int count;
 		switch (URI_MATCHER.match(uri)) {
-		case PREFERENCES:
+		case SESSIONS:
 			count = db.update(TB_NAME, values, selection, selectionArgs);
 			break;
-		case PREFERENCE_ID:
+		case SESSION_ID:
 			count = db.update(TB_NAME, values, COL_ID + "=" + uri.getPathSegments().get(1) + (TextUtils.isEmpty(selection) ? "" : " AND (" + selection + ")"), selectionArgs);
 			break;
 		default:
@@ -144,16 +140,16 @@ public class PreferenceProvider extends ContentProvider {
 
 	private DatabaseHelper mDbHelper;
 	private static final int DB_VERSION = 1;
-	private static final String DB_NAME = "preferences.db";
-	private static final String TB_NAME = "preferences";
+	private static final String DB_NAME = "sessions.db";
+	private static final String TB_NAME = "sessions";
 	private static final String SQL_CREATE_TABLE = String.format("CREATE TABLE IF NOT EXISTS %s (%s INTEGER PRIMARY KEY, %s TEXT UNIQUE NOT NULL, %s TEXT);", TB_NAME, COL_ID, COL_KEY, COL_VALUE);
 	private static final String SQL_ADD_INDEX = "CREATE UNIQUE INDEX index_key ON " + TB_NAME + "(" + COL_KEY + ");";
-	private static final int PREFERENCES = 10;
-	private static final int PREFERENCE_ID = 11;
+	private static final int SESSIONS = 10;
+	private static final int SESSION_ID = 11;
 	private static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
+	
 	static {
-		URI_MATCHER.addURI(AUTHORITY, "preferences", PREFERENCES);
-		URI_MATCHER.addURI(AUTHORITY, "preferences/#", PREFERENCE_ID);
+		URI_MATCHER.addURI(AUTHORITY, "sessions", SESSIONS);
+		URI_MATCHER.addURI(AUTHORITY, "sessions/#", SESSION_ID);
 	}
-	private static final String TYPE = "me.abitno.zi.provider/preference";
 }
