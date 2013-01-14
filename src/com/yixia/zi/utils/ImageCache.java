@@ -194,6 +194,8 @@ public class ImageCache {
 				}
 			} catch (final IOException e) {
 				Log.e(TAG, "addBitmapToCache - " + e);
+			} catch (IllegalStateException illegalStateException) {
+				Log.e(TAG, "addBitmapToCache - " + illegalStateException);
 			}
 		}
 	}
