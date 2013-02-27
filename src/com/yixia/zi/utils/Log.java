@@ -19,10 +19,12 @@ import java.util.MissingFormatArgumentException;
 
 public class Log {
 	public static final String TAG = "VPlayer";
+	public static final String DEBUG_TAG = "debug.vplayer";
 
 	public static void i(String msg, Object... args) {
 		try {
-			android.util.Log.i(TAG, String.format(msg, args));
+			if (SystemPropertiesProxy.getBoolean(DEBUG_TAG, false)) 
+				android.util.Log.i(TAG, String.format(msg, args));
 		} catch (MissingFormatArgumentException e) {
 			android.util.Log.e(TAG, "me.abitno.utils.Log", e);
 			android.util.Log.i(TAG, msg);
@@ -31,7 +33,8 @@ public class Log {
 
 	public static void d(String msg, Object... args) {
 		try {
-			android.util.Log.d(TAG, String.format(msg, args));
+			if (SystemPropertiesProxy.getBoolean(DEBUG_TAG, false)) 
+				android.util.Log.d(TAG, String.format(msg, args));
 		} catch (MissingFormatArgumentException e) {
 			android.util.Log.e(TAG, "me.abitno.utils.Log", e);
 			android.util.Log.d(TAG, msg);
@@ -40,7 +43,7 @@ public class Log {
 
 	public static void e(String msg, Object... args) {
 		try {
-			android.util.Log.e(TAG, String.format(msg, args));
+				android.util.Log.e(TAG, String.format(msg, args));
 		} catch (MissingFormatArgumentException e) {
 			android.util.Log.e(TAG, "me.abitno.utils.Log", e);
 			android.util.Log.e(TAG, msg);

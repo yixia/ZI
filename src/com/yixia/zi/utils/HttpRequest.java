@@ -95,6 +95,21 @@ public class HttpRequest {
   public static final String CHARSET_UTF8 = "UTF-8";
 
   /**
+   * 'application/x-www-form-urlencoded' content type header value
+   */
+  public static final String CONTENT_TYPE_FORM = "application/x-www-form-urlencoded";
+
+  /**
+   * 'application/json' content type header value
+   */
+  public static final String CONTENT_TYPE_JSON = "application/json";
+
+  /**
+   * 'gzip' encoding header value
+   */
+  public static final String ENCODING_GZIP = "gzip";
+
+  /**
    * 'Accept' header name
    */
   public static final String HEADER_ACCEPT = "Accept";
@@ -219,11 +234,7 @@ public class HttpRequest {
   private static final String CONTENT_TYPE_MULTIPART = "multipart/form-data; boundary="
       + BOUNDARY;
 
-  private static final String CONTENT_TYPE_FORM = "application/x-www-form-urlencoded";
-
-  private static final String CONTENT_TYPE_JSON = "application/json";
-
-  private static final String ENCODING_GZIP = "gzip";
+  private static final String CRLF = "\r\n";
 
   private static final String[] EMPTY_STRINGS = new String[0];
 
@@ -795,7 +806,7 @@ public class HttpRequest {
    *          name/value pairs
    * @return URL with appended query params
    */
-  public static String append(final CharSequence url, final String... params) {
+  public static String append(final CharSequence url, final Object... params) {
     final String baseUrl = url.toString();
     if (params == null || params.length == 0)
       return baseUrl;
@@ -887,7 +898,7 @@ public class HttpRequest {
    * @return request
    */
   public static HttpRequest get(final CharSequence baseUrl,
-      final boolean encode, final String... params) {
+      final boolean encode, final Object... params) {
     String url = append(baseUrl, params);
     return get(encode ? encode(url) : url);
   }
@@ -951,7 +962,7 @@ public class HttpRequest {
    * @return request
    */
   public static HttpRequest post(final CharSequence baseUrl,
-      final boolean encode, final String... params) {
+      final boolean encode, final Object... params) {
     String url = append(baseUrl, params);
     return post(encode ? encode(url) : url);
   }
@@ -1015,7 +1026,7 @@ public class HttpRequest {
    * @return request
    */
   public static HttpRequest put(final CharSequence baseUrl,
-      final boolean encode, final String... params) {
+      final boolean encode, final Object... params) {
     String url = append(baseUrl, params);
     return put(encode ? encode(url) : url);
   }
@@ -1079,7 +1090,7 @@ public class HttpRequest {
    * @return request
    */
   public static HttpRequest delete(final CharSequence baseUrl,
-      final boolean encode, final String... params) {
+      final boolean encode, final Object... params) {
     String url = append(baseUrl, params);
     return delete(encode ? encode(url) : url);
   }
@@ -1143,7 +1154,7 @@ public class HttpRequest {
    * @return request
    */
   public static HttpRequest head(final CharSequence baseUrl,
-      final boolean encode, final String... params) {
+      final boolean encode, final Object... params) {
     String url = append(baseUrl, params);
     return head(encode ? encode(url) : url);
   }
@@ -1331,7 +1342,7 @@ public class HttpRequest {
 
   @Override
   public String toString() {
-    return connection.getRequestMethod() + ' ' + connection.getURL();
+    return method() + ' ' + url();
   }
 
   /**
@@ -2403,7 +2414,7 @@ public class HttpRequest {
     if (output == null)
       return this;
     if (multipart)
-      output.write("\r\n--" + BOUNDARY + "--\r\n");
+      output.write(CRLF + "--" + BOUNDARY + "--" + CRLF);
     if (ignoreCloseExceptions)
       try {
         output.close();
@@ -2458,9 +2469,9 @@ public class HttpRequest {
     if (!multipart) {
       multipart = true;
       contentType(CONTENT_TYPE_MULTIPART).openOutput();
-      output.write("--" + BOUNDARY + "\r\n");
+      output.write("--" + BOUNDARY + CRLF);
     } else
-      output.write("\r\n--" + BOUNDARY + "\r\n");
+      output.write(CRLF + "--" + BOUNDARY + CRLF);
     return this;
   }
 
@@ -2474,12 +2485,29 @@ public class HttpRequest {
    */
   protected HttpRequest writePartHeader(final String name, final String filename)
       throws IOException {
+    return writePartHeader(name, filename, null);
+  }
+
+  /**
+   * Write part header
+   *
+   * @param name
+   * @param filename
+   * @param contentType
+   * @return this request
+   * @throws IOException
+   */
+  protected HttpRequest writePartHeader(final String name,
+      final String filename, final String contentType) throws IOException {
     final StringBuilder partBuffer = new StringBuilder();
     partBuffer.append("form-data; name=\"").append(name);
     if (filename != null)
       partBuffer.append("\"; filename=\"").append(filename);
     partBuffer.append('"');
-    return partHeader("Content-Disposition", partBuffer.toString());
+    partHeader("Content-Disposition", partBuffer.toString());
+    if (contentType != null)
+      partHeader(HEADER_CONTENT_TYPE, contentType);
+    return send(CRLF);
   }
 
   /**
@@ -2504,9 +2532,25 @@ public class HttpRequest {
    */
   public HttpRequest part(final String name, final String filename,
       final String part) throws HttpRequestException {
+    return part(name, filename, null, part);
+  }
+
+  /**
+   * Write part of a multipart request to the request body
+   *
+   * @param name
+   * @param filename
+   * @param contentType
+   *          value of the Content-Type part header
+   * @param part
+   * @return this request
+   * @throws HttpRequestException
+   */
+  public HttpRequest part(final String name, final String filename,
+      final String contentType, final String part) throws HttpRequestException {
     try {
       startPart();
-      writePartHeader(name, filename);
+      writePartHeader(name, filename, contentType);
       output.write(part);
     } catch (IOException e) {
       throw new HttpRequestException(e);
@@ -2565,13 +2609,29 @@ public class HttpRequest {
    */
   public HttpRequest part(final String name, final String filename,
       final File part) throws HttpRequestException {
+    return part(name, filename, null, part);
+  }
+
+  /**
+   * Write part of a multipart request to the request body
+   *
+   * @param name
+   * @param filename
+   * @param contentType
+   *          value of the Content-Type part header
+   * @param part
+   * @return this request
+   * @throws HttpRequestException
+   */
+  public HttpRequest part(final String name, final String filename,
+      final String contentType, final File part) throws HttpRequestException {
     final InputStream stream;
     try {
       stream = new BufferedInputStream(new FileInputStream(part));
     } catch (IOException e) {
       throw new HttpRequestException(e);
     }
-    return part(name, filename, stream);
+    return part(name, filename, contentType, stream);
   }
 
   /**
@@ -2584,7 +2644,7 @@ public class HttpRequest {
    */
   public HttpRequest part(final String name, final InputStream part)
       throws HttpRequestException {
-    return part(name, null, part);
+    return part(name, null, null, part);
   }
 
   /**
@@ -2592,15 +2652,18 @@ public class HttpRequest {
    *
    * @param name
    * @param filename
+   * @param contentType
+   *          value of the Content-Type part header
    * @param part
    * @return this request
    * @throws HttpRequestException
    */
   public HttpRequest part(final String name, final String filename,
-      final InputStream part) throws HttpRequestException {
+      final String contentType, final InputStream part)
+      throws HttpRequestException {
     try {
       startPart();
-      writePartHeader(name, filename);
+      writePartHeader(name, filename, contentType);
       copy(part, output);
     } catch (IOException e) {
       throw new HttpRequestException(e);
@@ -2618,7 +2681,7 @@ public class HttpRequest {
    */
   public HttpRequest partHeader(final String name, final String value)
       throws HttpRequestException {
-    return send(name).send(": ").send(value).send("\r\n\r\n");
+    return send(name).send(": ").send(value).send(CRLF);
   }
 
   /**
@@ -2868,5 +2931,23 @@ public class HttpRequest {
       ((HttpsURLConnection) connection)
           .setHostnameVerifier(getTrustedVerifier());
     return this;
+  }
+
+  /**
+   * Get the {@link URL} of this request's connection
+   *
+   * @return request URL
+   */
+  public URL url() {
+    return connection.getURL();
+  }
+
+  /**
+   * Get the HTTP method of this request
+   *
+   * @return method
+   */
+  public String method() {
+    return connection.getRequestMethod();
   }
 }
