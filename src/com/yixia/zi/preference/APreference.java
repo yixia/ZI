@@ -20,11 +20,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.content.ContentResolver;
-import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.ContentObserver;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Handler;
 import android.util.Log;
 
@@ -45,6 +45,11 @@ public class APreference {
 		mOnPreferenceChangedListener = l;
 		mResolver.registerContentObserver(PreferenceProvider.CONTENT_URI, true, mObserver);
 	}
+	
+	public void registerObserver(Uri uri, OnPreferenceChangedListener l) {
+		mOnPreferenceChangedListener = l;
+		mResolver.registerContentObserver(uri, true, mObserver);
+	}
 
 	public void unregisterObserver() {
 		mResolver.unregisterContentObserver(mObserver);
@@ -53,7 +58,7 @@ public class APreference {
 	public boolean contains(String key) {
 		Cursor c = null;
 		try {
-			c = mResolver.query(PreferenceProvider.CONTENT_URI, PROJECTION_VALUE, "key like ?", new String[] { key }, null);
+			c = mResolver.query(Uri.withAppendedPath(PreferenceProvider.CONTENT_URI, key), PROJECTION_VALUE, null, null, null);
 			if (c != null && c.moveToFirst())
 				return true;
 			return false;
@@ -129,7 +134,7 @@ public class APreference {
 	public String getString(String key, String defaultValue) {
 		Cursor c = null;
 		try {
-			c = mResolver.query(PreferenceProvider.CONTENT_URI, PROJECTION_VALUE, "key like ?", new String[] { key }, null);
+			c = mResolver.query(Uri.withAppendedPath(PreferenceProvider.CONTENT_URI, key), PROJECTION_VALUE, null, null, null);
 			if (c != null && c.moveToFirst())
 				return c.getString(0);
 			return defaultValue;
@@ -164,7 +169,7 @@ public class APreference {
 	}
 
 	public int remove(String key) {
-		return mResolver.delete(PreferenceProvider.CONTENT_URI, "key like ?", new String[] { key });
+		return mResolver.delete(Uri.withAppendedPath(PreferenceProvider.CONTENT_URI, key), null, null);
 	}
 
 	public int clear() {
@@ -177,9 +182,9 @@ public class APreference {
 			ContentValues cv = new ContentValues();
 			cv.put(PreferenceProvider.COL_KEY, key);
 			cv.put(PreferenceProvider.COL_VALUE, String.valueOf(value));
-			c = mResolver.query(PreferenceProvider.CONTENT_URI, PROJECTION_ID, "key like ?", new String[] { key }, null);
+			c = mResolver.query(Uri.withAppendedPath(PreferenceProvider.CONTENT_URI, key), PROJECTION_ID, null, null, null);
 			if (c != null && c.moveToFirst()) {
-				mResolver.update(ContentUris.withAppendedId(PreferenceProvider.CONTENT_URI, c.getInt(0)), cv, null, null);
+				mResolver.update(Uri.withAppendedPath(PreferenceProvider.CONTENT_URI, key), cv, null, null);
 			} else {
 				mResolver.insert(PreferenceProvider.CONTENT_URI, cv);
 			}

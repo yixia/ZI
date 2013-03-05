@@ -53,9 +53,9 @@ public class PreferenceProvider extends ContentProvider {
 		case PREFERENCES:
 			qb.setTables(TB_NAME);
 			break;
-		case PREFERENCE_ID:
+		case PREFERENCE_KEY:
 			qb.setTables(TB_NAME);
-			qb.appendWhere(COL_ID + "=" + uri.getPathSegments().get(1));
+			qb.appendWhere(COL_KEY + "= '" + uri.getPathSegments().get(1) + "'");
 			break;
 		default:
 			throw new IllegalArgumentException("Unknown URI " + uri);
@@ -77,7 +77,7 @@ public class PreferenceProvider extends ContentProvider {
 			throw new IllegalArgumentException("Unknown URI " + uri);
 
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
-		long rowId = db.insert(TB_NAME, COL_VALUE, values);
+		long rowId = db.insert(TB_NAME, null, values);
 		if (rowId > 0) {
 			Uri noteUri = ContentUris.withAppendedId(CONTENT_URI, rowId);
 			getContext().getContentResolver().notifyChange(noteUri, null);
@@ -94,8 +94,8 @@ public class PreferenceProvider extends ContentProvider {
 		case PREFERENCES:
 			count = db.delete(TB_NAME, selection, selectionArgs);
 			break;
-		case PREFERENCE_ID:
-			count = db.delete(TB_NAME, COL_ID + "=" + uri.getPathSegments().get(1) + (TextUtils.isEmpty(selection) ? "" : " AND (" + selection + ")"), selectionArgs);
+		case PREFERENCE_KEY:
+			count = db.delete(TB_NAME, COL_KEY + "= '" + uri.getPathSegments().get(1) + "'" + (TextUtils.isEmpty(selection) ? "" : " AND (" + selection + ")"), selectionArgs);
 			break;
 		default:
 			throw new IllegalArgumentException("Unknown URI " + uri);
@@ -113,8 +113,8 @@ public class PreferenceProvider extends ContentProvider {
 		case PREFERENCES:
 			count = db.update(TB_NAME, values, selection, selectionArgs);
 			break;
-		case PREFERENCE_ID:
-			count = db.update(TB_NAME, values, COL_ID + "=" + uri.getPathSegments().get(1) + (TextUtils.isEmpty(selection) ? "" : " AND (" + selection + ")"), selectionArgs);
+		case PREFERENCE_KEY:
+			count = db.update(TB_NAME, values, COL_KEY + "= '" + uri.getPathSegments().get(1)  + "'" + (TextUtils.isEmpty(selection) ? "" : " AND (" + selection + ")"), selectionArgs);
 			break;
 		default:
 			throw new IllegalArgumentException("Unknown URI " + uri);
@@ -149,11 +149,11 @@ public class PreferenceProvider extends ContentProvider {
 	private static final String SQL_CREATE_TABLE = String.format("CREATE TABLE IF NOT EXISTS %s (%s INTEGER PRIMARY KEY, %s TEXT UNIQUE NOT NULL, %s TEXT);", TB_NAME, COL_ID, COL_KEY, COL_VALUE);
 	private static final String SQL_ADD_INDEX = "CREATE UNIQUE INDEX index_key ON " + TB_NAME + "(" + COL_KEY + ");";
 	private static final int PREFERENCES = 10;
-	private static final int PREFERENCE_ID = 11;
+	private static final int PREFERENCE_KEY = 11;
 	private static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
 	static {
 		URI_MATCHER.addURI(AUTHORITY, "preferences", PREFERENCES);
-		URI_MATCHER.addURI(AUTHORITY, "preferences/#", PREFERENCE_ID);
+		URI_MATCHER.addURI(AUTHORITY, "preferences/*", PREFERENCE_KEY);
 	}
 	private static final String TYPE = "me.abitno.zi.provider/preference";
 }
