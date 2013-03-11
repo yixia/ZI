@@ -664,6 +664,7 @@ public final class Crouton {
     this.croutonView.addView(contentView);
   }
 
+  @SuppressWarnings("deprecation")
   private FrameLayout initializeCroutonViewGroup(Resources resources) {
     FrameLayout croutonView = new FrameLayout(this.activity);
 
