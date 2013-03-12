@@ -17,6 +17,7 @@
 
 package com.yixia.zi.widget.crouton;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
@@ -664,7 +665,9 @@ public final class Crouton {
     this.croutonView.addView(contentView);
   }
 
-  private FrameLayout initializeCroutonViewGroup(Resources resources) {
+  @SuppressWarnings("deprecation")
+@SuppressLint("NewApi")
+private FrameLayout initializeCroutonViewGroup(Resources resources) {
     FrameLayout croutonView = new FrameLayout(this.activity);
 
     if(null != onClickListener)
@@ -702,7 +705,13 @@ public final class Crouton {
       if (this.style.isTileEnabled) {
         drawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
       }
-      croutonView.setBackgroundDrawable(drawable);
+      int sdk = android.os.Build.VERSION.SDK_INT;
+      if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+    	  croutonView.setBackgroundDrawable(drawable);
+      } else {
+    	  croutonView.setBackground(drawable);
+      }
+
     }
     return croutonView;
   }
