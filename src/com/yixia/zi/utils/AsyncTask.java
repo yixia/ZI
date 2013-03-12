@@ -590,8 +590,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
      *
      * @see #execute(Object[])
      */
-    @SuppressWarnings("incomplete-switch")
-	public final AsyncTask<Params, Progress, Result> executeOnExecutor(Executor exec,
+    public final AsyncTask<Params, Progress, Result> executeOnExecutor(Executor exec,
             Params... params) {
         if (mStatus != Status.PENDING) {
             switch (mStatus) {
