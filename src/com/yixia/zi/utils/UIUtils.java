@@ -40,6 +40,10 @@ public class UIUtils {
 	public static boolean hasGingerbread() {
 		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD;
 	}
+	
+	public static boolean hasGingerbreadMR1() {
+		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD_MR1;
+	}
 
 	public static boolean hasHoneycomb() {
 		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
@@ -69,6 +73,10 @@ public class UIUtils {
 		return hasHoneycomb() && isTablet(context);
 	}
 
+	public static boolean isGingerbread() {
+		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD && Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1;
+	}
+	
 	public static boolean isNetworkAvailable(Context context) {
 		ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
