@@ -8,7 +8,6 @@ import android.graphics.RectF;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.Pair;
 import android.widget.SeekBar;
 
@@ -30,7 +29,7 @@ public class SegmentSeekBar extends SeekBar {
 
 	private long[] mSegments;
 	private long mLength;
-	
+
 	private ArrayList<Pair<Integer, Integer>> mSectionList;
 
 	/**
@@ -100,7 +99,7 @@ public class SegmentSeekBar extends SeekBar {
 		mHandler.removeMessages(MSG_UPDATE);
 		mHandler.sendEmptyMessage(MSG_UPDATE);
 	}
-	
+
 	public void setSegmentProgress(long[] segments, long length) {
 		if (segments != null && segments.length > 0) {
 			this.mSegments = segments;
@@ -117,17 +116,26 @@ public class SegmentSeekBar extends SeekBar {
 			return;
 		}
 		for (int i = 0; i < mSegments.length; i += 2) {
-	    long begin = mSegments[i];
-	    long end = mSegments[i+1];
-	    long xx = begin * getMax() / mLength;
-	    long yy = end * getMax() / mLength;
-	    
-	    mBounds.left = getWidth() * xx / getMax();
-			mBounds.right = getWidth() * yy / getMax();
-			mBounds.top = getHeight() / 2 - 2;
+			long begin = mSegments[i];
+			long end = mSegments[i + 1];
+			long xx = begin * getMax() / mLength;
+			long yy = end * getMax() / mLength;
+			int wid = getWidth() - getThumbOffset();
+			if (i == 0) {
+				mBounds.left = wid * xx / getMax() + getThumbOffset();
+			} else {
+				mBounds.left = wid * xx / getMax();
+			}
+			if (i == mSegments.length - 1) {
+				mBounds.right = wid * yy / getMax() - getThumbOffset();
+			} else {
+				mBounds.right = wid * yy / getMax();
+			}
+
+			mBounds.top = getHeight() / 2 - 4;
 			mBounds.bottom = getHeight() / 2 + 2;
 			mCurrentProgress = end;
 			canvas.drawRect(mBounds, mProgressPaint);
-    }
+		}
 	}
 }
