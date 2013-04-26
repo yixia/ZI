@@ -8,4 +8,5 @@
 	<color name="indicator_color">#33ccc5</color>
 	<color name="pin_progress_default_circle_color">#80ffffff</color>
     <color name="pin_progress_default_progress_color">#68cec9</color>
+    <color name="red">#ff0000</color>
 </resources>
