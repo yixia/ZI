@@ -74,7 +74,7 @@ public class SegmentSeekBar extends SeekBar {
 			}
 		};
 
-		int progressColor = ctx.getResources().getColor(R.color.red);
+		int progressColor = ctx.getResources().getColor(R.color.seekbar_buffer_color);
 		mProgressPaint = new Paint();
 		mProgressPaint.setColor(progressColor);
 		mProgressPaint.setAntiAlias(true);
