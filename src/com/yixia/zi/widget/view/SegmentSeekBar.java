@@ -121,11 +121,7 @@ public class SegmentSeekBar extends SeekBar {
 			long xx = begin * getMax() / mLength;
 			long yy = end * getMax() / mLength;
 			int wid = getWidth() - getThumbOffset();
-			if (i == 0) {
-				mBounds.left = wid * xx / getMax() + getThumbOffset();
-			} else {
-				mBounds.left = wid * xx / getMax();
-			}
+			mBounds.left = wid * xx / getMax() + getThumbOffset();
 			if (i == mSegments.length - 1) {
 				mBounds.right = wid * yy / getMax() - getThumbOffset();
 			} else {

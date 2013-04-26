@@ -8,7 +8,7 @@
 	the specific language governing permissions and limitations under the License. -->
 
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-	<item android:id="@android:id/background" android:drawable="@drawable/scrubber_track_holo_dark" />
+	<item android:id="@android:id/background" android:drawable="@drawable/scrubber_secondary_holo" />
 	<item android:id="@android:id/secondaryProgress">
 		<scale android:scaleWidth="100%" android:drawable="@drawable/scrubber_secondary_holo" />
 	</item>
