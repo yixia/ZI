@@ -32,9 +32,9 @@ import android.util.TypedValue;
  * @author crossle
  */
 public class UIUtils {
-	
+
 	private static final String IMAGE_FETCHER = "imageFetcher";
-	
+
 	public static boolean hasFroyo() {
 		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO;
 	}
@@ -42,7 +42,7 @@ public class UIUtils {
 	public static boolean hasGingerbread() {
 		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD;
 	}
-	
+
 	public static boolean hasGingerbreadMR1() {
 		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD_MR1;
 	}
@@ -78,7 +78,7 @@ public class UIUtils {
 	public static boolean isGingerbread() {
 		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD && Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1;
 	}
-	
+
 	public static boolean isNetworkAvailable(Context context) {
 		ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
@@ -95,7 +95,6 @@ public class UIUtils {
 		return fetcher;
 	}
 
-
 	/**
 	 * Set the theme of the Activity, and restart it by creating a new Activity of
 	 * the same type.
@@ -110,8 +109,8 @@ public class UIUtils {
 		activity.getTheme().resolveAttribute(attrId, typedValue, true);
 		return typedValue;
 	}
-	
-	public static  String getAvailaleSize(Context context, String path) {
+
+	public static String getAvailaleSize(Context context, String path) {
 		StatFs stat = new StatFs(path);
 		long blockSize = stat.getBlockSize();
 		long availableBlocks = stat.getAvailableBlocks();
