@@ -4,16 +4,14 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
-import android.util.Pair;
 import android.widget.SeekBar;
 
 import com.yixia.zi.R;
-
-import java.util.ArrayList;
 
 /**
  * Section Buffer SeekBar
@@ -29,8 +27,6 @@ public class SegmentSeekBar extends SeekBar {
 
 	private long[] mSegments;
 	private long mLength;
-
-	private ArrayList<Pair<Integer, Integer>> mSectionList;
 
 	/**
 	 * @param context
@@ -61,7 +57,6 @@ public class SegmentSeekBar extends SeekBar {
 
 	@SuppressLint("HandlerLeak")
 	private void init(Context ctx) {
-		mSectionList = new ArrayList<Pair<Integer, Integer>>();
 		mBounds = new RectF(0, 0, 0, 0);
 		mCurrentProgress = 0;
 		mHandler = new Handler() {
@@ -88,18 +83,6 @@ public class SegmentSeekBar extends SeekBar {
 		mBounds.bottom = b - t;
 	}
 
-	/**
-	 * Set several section buffer
-	 * 
-	 * @param sectionList
-	 */
-	public void setSegmentProgress(ArrayList<Pair<Integer, Integer>> sectionList) {
-		mSectionList.clear();
-		mSectionList = sectionList;
-		mHandler.removeMessages(MSG_UPDATE);
-		mHandler.sendEmptyMessage(MSG_UPDATE);
-	}
-
 	public void setSegmentProgress(long[] segments, long length) {
 		if (segments != null && segments.length > 0) {
 			this.mSegments = segments;
@@ -115,20 +98,20 @@ public class SegmentSeekBar extends SeekBar {
 		if (mSegments == null || mLength == 0) {
 			return;
 		}
+
+		Rect progressRect = getProgressDrawable().getBounds();
+		int progressRange = progressRect.right - progressRect.left;
+
 		for (int i = 0; i < mSegments.length; i += 2) {
 			long begin = mSegments[i];
 			long end = mSegments[i + 1];
+
 			long xx = begin * getMax() / mLength;
 			long yy = end * getMax() / mLength;
-			int wid = getWidth() - getThumbOffset();
-			mBounds.left = wid * xx / getMax() + getThumbOffset();
-			if (i == mSegments.length - 1) {
-				mBounds.right = wid * yy / getMax() - getThumbOffset();
-			} else {
-				mBounds.right = wid * yy / getMax();
-			}
+			mBounds.left = progressRange * xx / getMax() + getThumbOffset();
+			mBounds.right = progressRange * yy / getMax() + getThumbOffset();
 
-			mBounds.top = getHeight() / 2 - 4;
+			mBounds.top = getHeight() / 2 - 3.5f;
 			mBounds.bottom = getHeight() / 2 + 2;
 			mCurrentProgress = end;
 			canvas.drawRect(mBounds, mProgressPaint);
