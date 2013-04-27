@@ -22,7 +22,9 @@ import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
+import android.os.StatFs;
 import android.support.v4.app.FragmentActivity;
+import android.text.format.Formatter;
 import android.util.TypedValue;
 
 /**
@@ -107,5 +109,12 @@ public class UIUtils {
 		TypedValue typedValue = new TypedValue();
 		activity.getTheme().resolveAttribute(attrId, typedValue, true);
 		return typedValue;
+	}
+	
+	public static  String getAvailaleSize(Context context, String path) {
+		StatFs stat = new StatFs(path);
+		long blockSize = stat.getBlockSize();
+		long availableBlocks = stat.getAvailableBlocks();
+		return Formatter.formatFileSize(context, (availableBlocks * blockSize));
 	}
 }
