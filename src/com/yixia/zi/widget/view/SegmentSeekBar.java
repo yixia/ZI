@@ -6,6 +6,8 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.widget.SeekBar;
 
@@ -82,5 +84,61 @@ public class SegmentSeekBar extends SeekBar {
 			canvas.drawRect(mBounds, mPaint);
 			canvas.restore();
 		}
+	}
+
+	public static class SavedState extends BaseSavedState {
+		private double[] mSegments;
+
+		public SavedState(Parcelable superState) {
+			super(superState);
+		}
+
+		private SavedState(Parcel in) {
+			super(in);
+			in.readDoubleArray(mSegments);
+		}
+
+		@Override
+		public void writeToParcel(Parcel out, int flags) {
+			super.writeToParcel(out, flags);
+			out.writeDoubleArray(mSegments);
+		}
+
+		public static final Parcelable.Creator<SavedState> CREATOR = new Creator<SavedState>() {
+			@Override
+			public SavedState createFromParcel(Parcel parcel) {
+				return new SavedState(parcel);
+			}
+
+			@Override
+			public SavedState[] newArray(int size) {
+				return new SavedState[size];
+			}
+		};
+
+	}
+
+	@Override
+	public Parcelable onSaveInstanceState() {
+		Parcelable superState = super.onSaveInstanceState();
+		if (isSaveEnabled()) {
+			SavedState ss = new SavedState(superState);
+			ss.mSegments = mSegments;
+			return ss;
+		}
+		return superState;
+	}
+
+	@Override
+	public void onRestoreInstanceState(Parcelable state) {
+		if (!(state instanceof SavedState)) {
+			super.onRestoreInstanceState(state);
+			return;
+		}
+
+		SavedState ss = (SavedState) state;
+		super.onRestoreInstanceState(ss.getSuperState());
+
+		mSegments = ss.mSegments;
 	}
 }
