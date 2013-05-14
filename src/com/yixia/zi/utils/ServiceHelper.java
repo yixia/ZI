@@ -20,10 +20,10 @@ import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
 
 public class ServiceHelper {
-	public static boolean isServiceRunning(Context ctx, String name) {
+	public static boolean isServiceRunning(Context ctx, String serviceName, String processName) {
 		ActivityManager manager = (ActivityManager) ctx.getSystemService(Context.ACTIVITY_SERVICE);
 		for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-			if (name.equals(service.service.getClassName()))
+			if (serviceName.equals(service.service.getClassName()) && processName.equals(service.process))
 				return true;
 		}
 		return false;
