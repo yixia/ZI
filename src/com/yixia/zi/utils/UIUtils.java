@@ -15,6 +15,7 @@
  */
 package com.yixia.zi.utils;
 
+import java.io.File;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -111,6 +112,9 @@ public class UIUtils {
 	}
 
 	public static String getAvailaleSize(Context context, String path) {
+    File file = new File(path);
+    if (!file.exists())
+      return null;
 		StatFs stat = new StatFs(path);
 		long blockSize = stat.getBlockSize();
 		long availableBlocks = stat.getAvailableBlocks();
