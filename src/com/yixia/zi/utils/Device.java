@@ -45,12 +45,8 @@ public class Device {
     sb.append(getPair("serial", Build.SERIAL));
     sb.append(getPair("android_id", Settings.Secure.getString(ctx.getContentResolver(), Settings.Secure.ANDROID_ID)));
     TelephonyManager tel = (TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE);
-    sb.append(getPair("device_id", tel.getDeviceId()));
-    sb.append(getPair("subscriber_id", tel.getSubscriberId()));
-    sb.append(getPair("sim_serial_number", tel.getSimSerialNumber()));
     sb.append(getPair("sim_country_iso", tel.getSimCountryIso()));
     sb.append(getPair("network_operator_name", tel.getNetworkOperatorName()));
-    sb.append(getPair("sim_operator", tel.getSimOperator()));
     sb.append(getPair("unique_id", Crypto.md5(sb.toString())));
     return sb.toString();
   }
