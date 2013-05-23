@@ -23,4 +23,4 @@ local.properties
 .project
 
 # IntelliJ IDEA files
-.iml
+*.iml
