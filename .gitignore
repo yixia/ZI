@@ -10,6 +10,7 @@
 
 # Gradle config
 .gradle
+build
 
 # generated files
 bin/
