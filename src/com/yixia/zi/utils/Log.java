@@ -18,7 +18,7 @@ package com.yixia.zi.utils;
 import java.util.MissingFormatArgumentException;
 
 public class Log {
-	public static final String TAG = "VPlayer";
+	public static final String TAG = "Vitamio[Player]";
 	public static final String DEBUG_TAG = "debug.vplayer";
 
 	public static void i(String msg, Object... args) {
