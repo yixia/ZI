@@ -48,6 +48,7 @@ public class StringHelper {
 		}
 	}
 
+	// Formatter.formatFileSize
 	public static String generateFileSize(long size) {
 		String fileSize;
 		if (size < KB)
