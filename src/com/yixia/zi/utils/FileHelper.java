@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 import android.os.Environment;
+import android.text.TextUtils;
 
 public class FileHelper {
 
@@ -167,7 +168,7 @@ public class FileHelper {
 	}
 
 	public static String getUrlExtension(String url) {
-		if (!StringUtils.isBlank(url)) {
+		if (!TextUtils.isEmpty(url)) {
 			int slashIndex = url.lastIndexOf('/');
 			if (slashIndex > -1) {
 				String fileName = url.substring(slashIndex + 1);

@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 
 import android.net.Uri;
+import android.text.TextUtils;
 
 public class FileUtils {
 	private static final String FILE_NAME_RESERVED = "|\\?*<\":>+[]/'";
@@ -66,7 +67,7 @@ public class FileUtils {
 	 */
 	public static String getPath(String uri) {
 		Log.i("FileUtils#getPath(%s)", uri);
-		if (StringUtils.isBlank(uri))
+		if (TextUtils.isEmpty(uri))
 			return null;
 		if (uri.startsWith("file://") && uri.length() > 7)
 			return Uri.decode(uri.substring(7));

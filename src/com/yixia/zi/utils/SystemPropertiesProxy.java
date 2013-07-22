@@ -140,7 +140,6 @@ public class SystemPropertiesProxy {
 			throw iAE;
 		} catch (Exception e) {
 			ret = def;
-			//TODO
 		}
 
 		return ret;
@@ -206,7 +205,6 @@ public class SystemPropertiesProxy {
 		} catch (IllegalArgumentException iAE) {
 			throw iAE;
 		} catch (Exception e) {
-			//TODO
 		}
 
 	}

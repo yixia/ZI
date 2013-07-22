@@ -15,7 +15,6 @@
  */
 package com.yixia.zi.utils;
 
-import android.text.TextUtils;
 import net.sourceforge.pinyin4j.PinyinHelper;
 
 import java.util.Arrays;
@@ -92,7 +91,4 @@ public class StringUtils {
         return letters.toString().toLowerCase();
     }
 
-    public static boolean isBlank(String s) {
-        return TextUtils.isEmpty(s);
-    }
 }

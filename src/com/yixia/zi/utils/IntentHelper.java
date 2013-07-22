@@ -15,10 +15,6 @@
  */
 package com.yixia.zi.utils;
 
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -29,6 +25,11 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Parcelable;
 import android.text.Html;
+import android.text.TextUtils;
+
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public final class IntentHelper {
 
@@ -46,7 +47,7 @@ public final class IntentHelper {
 			if (result == null) {
 				final String type = intent.getType();
 				String sharedUrl = intent.getStringExtra(Intent.EXTRA_TEXT);
-				if (!StringUtils.isBlank(sharedUrl)) {
+				if (!TextUtils.isEmpty(sharedUrl)) {
 					if ("text/plain".equals(type) && sharedUrl != null) {
 						result = getTextUri(sharedUrl);
 					} else if ("text/html".equals(type) && sharedUrl != null) {
@@ -66,7 +67,7 @@ public final class IntentHelper {
 		Matcher matcher = mMediaPattern.matcher(sharedUrl);
 		if (matcher.find()) {
 			sharedUrl = matcher.group();
-			if (!StringUtils.isBlank(sharedUrl)) {
+			if (!TextUtils.isEmpty(sharedUrl)) {
 				return Uri.parse(sharedUrl);
 			}
 		}
@@ -74,7 +75,7 @@ public final class IntentHelper {
 	}
 
 	public static boolean existPackage(final Context ctx, String packageName) {
-		if (!StringUtils.isBlank(packageName)) {
+		if (!TextUtils.isEmpty(packageName)) {
 			for (PackageInfo p : ctx.getPackageManager().getInstalledPackages(0)) {
 				if (packageName.equals(p.packageName))
 					return true;
