@@ -25,8 +25,6 @@ ZI Library for wonderful Android development
 
 * OutlineTextView, a TextView whose text has borders to increase readability
 
-* Styles and themes based on Android Holo theme, available for all Android versions
-
 * Crouton backport from keyboardsurfer [Crouton][1]
 
 * HttpRequest, a simple convenience library for using a HttpURLConnection to make requests and access the response, [detail][2]

@@ -573,7 +573,7 @@ public class CropImage extends MonitoredActivity {
 		}
 
 		if (noStorageText != -1) {
-			Toast.makeText(activity, noStorageText, 5000).show();
+			Toast.makeText(activity, noStorageText, Toast.LENGTH_LONG).show();
 		}
 	}
 
@@ -584,7 +584,8 @@ public class CropImage extends MonitoredActivity {
 			} else {*/
 			String storageDirectory = Environment.getExternalStorageDirectory().toString();
 			StatFs stat = new StatFs(storageDirectory);
-			float remaining = ((float) stat.getAvailableBlocks() * (float) stat.getBlockSize()) / 400000F;
+			@SuppressWarnings("deprecation")
+      float remaining = ((float) stat.getAvailableBlocks() * (float) stat.getBlockSize()) / 400000F;
 			return (int) remaining;
 			//}
 		} catch (Exception ex) {
