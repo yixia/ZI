@@ -17,4 +17,17 @@ public class ProcessHelper {
 		}
 		return false;
 	}
+
+	public static boolean isTopActivity(Context ctx) {
+		ActivityManager am = (ActivityManager) ctx.getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
+		List<ActivityManager.RunningAppProcessInfo> list = am.getRunningAppProcesses();
+		if (list != null && list.isEmpty())
+			return false;
+		for (ActivityManager.RunningAppProcessInfo process : list) {
+			if (process.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND && process.processName.equals(ctx.getPackageName())) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
