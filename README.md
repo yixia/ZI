@@ -2,17 +2,7 @@
 ZI Library for wonderful Android development
 -------------
 
-1) Documentation
-----------------
-
-* Read the documentation in the doc/ directory.
-
-2) Licensing
-------------
-
-* See the LICENSE declaration in each source file.
-
-3) Components
+1) Components
 -------------
 
 * ProviderPreference, shared preferences accross processes built on ContentProvider
@@ -29,7 +19,15 @@ ZI Library for wonderful Android development
 
 * HttpRequest, a simple convenience library for using a HttpURLConnection to make requests and access the response, [detail][2]
 
-* ImageFetcher, a asynchronous load remote and local image of use memery and disk lrucache
+* [ImageFetcher][3], a asynchronous load remote and local image of use memery and disk lrucache .
+
+
+2) Licensing
+------------
+
+* See the LICENSE declaration in each source file.
+
 
 [1]: https://github.com/keyboardsurfer/Crouton
 [2]: https://github.com/kevinsawicki/http-request
+[3]: https://github.com/crossle/ImageFetcher
