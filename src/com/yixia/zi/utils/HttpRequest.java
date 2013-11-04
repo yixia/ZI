@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 2011 Kevin Sawicki <kevinsawicki@gmail.com>
  *
@@ -615,9 +614,11 @@ public class HttpRequest {
     private static final long serialVersionUID = -1170466989781746231L;
 
     /**
+     * Create a new HttpRequestException with the given cause
+     *
      * @param cause
      */
-    protected HttpRequestException(final IOException cause) {
+    public HttpRequestException(final IOException cause) {
       super(cause);
     }
 
@@ -1285,6 +1286,17 @@ public class HttpRequest {
   }
 
   /**
+   * Set the 'http.maxConnections' property to the given value.
+   * <p>
+   * This setting will apply to all requests.
+   *
+   * @param maxConnections
+   */
+  public static void maxConnections(final int maxConnections) {
+    setProperty("http.maxConnections", Integer.toString(maxConnections));
+  }
+
+  /**
    * Set the 'http.proxyHost' & 'https.proxyHost' properties to the given host
    * value.
    * <p>
@@ -1776,7 +1788,10 @@ public class HttpRequest {
         try {
           stream = getConnection().getInputStream();
         } catch (IOException e) {
-          throw new HttpRequestException(e);
+          if (contentLength() > 0)
+            throw new HttpRequestException(e);
+          else
+            stream = new ByteArrayInputStream(new byte[0]);
         }
     }
 
@@ -3130,7 +3145,7 @@ public class HttpRequest {
    * @return this request
    */
   public HttpRequest followRedirects(final boolean followRedirects) {
-    getConnection().setFollowRedirects(followRedirects);
+    getConnection().setInstanceFollowRedirects(followRedirects);
     return this;
   }
 }
