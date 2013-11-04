@@ -67,6 +67,14 @@ public class UIUtils {
 	public static boolean hasJellyBeanMR1() {
 		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1;
 	}
+	
+	public static boolean hasJellyBeanMR2() {
+		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2;
+	}
+	
+	public static boolean hasKitKat() {
+		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
+	}
 
 	public static boolean isTablet(Context context) {
 		return (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
@@ -112,11 +120,13 @@ public class UIUtils {
 	}
 
 	public static String getAvailaleSize(Context context, String path) {
-    File file = new File(path);
-    if (!file.exists())
-      return null;
+		File file = new File(path);
+		if (!file.exists())
+			return null;
 		StatFs stat = new StatFs(path);
+		@SuppressWarnings("deprecation")
 		long blockSize = stat.getBlockSize();
+		@SuppressWarnings("deprecation")
 		long availableBlocks = stat.getAvailableBlocks();
 		return Formatter.formatFileSize(context, (availableBlocks * blockSize));
 	}
