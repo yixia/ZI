@@ -17,6 +17,7 @@ package com.yixia.zi.utils;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yixia.zi.R;
@@ -37,8 +38,12 @@ public class ToastHelper {
 	public static void showToast(Context ctx, int duration, String text) {
 		Toast toast = Toast.makeText(ctx, text, duration);
 		View mNextView = toast.getView();
-		if (mNextView != null)
+		if (mNextView != null) {
 			mNextView.setBackgroundResource(R.drawable.toast_frame);
+			TextView textView = (TextView)mNextView.findViewById(android.R.id.message);
+			textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_toast_vplayer, 0, 0, 0);
+			textView.setCompoundDrawablePadding(6);
+		}
 		toast.show();
 	}
 }
