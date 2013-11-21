@@ -17,21 +17,30 @@ package com.yixia.zi.utils;
 
 import java.lang.reflect.Method;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.util.DisplayMetrics;
 import android.view.Display;
 
+@SuppressLint("NewApi")
 public class DeviceUtils {
 	@SuppressWarnings("deprecation")
 	public static int getScreenWidth(Activity ctx) {
 		int width;
 		Display display = ctx.getWindowManager().getDefaultDisplay();
-		try {
-			Method mGetRawW = Display.class.getMethod("getRawWidth");
-			width = (Integer) mGetRawW.invoke(display);
-		} catch (Exception e) {
-			width = display.getWidth();
+		if (UIUtils.hasJellyBeanMR1()) {
+			DisplayMetrics displayMetrics = new DisplayMetrics(); 
+			display.getRealMetrics(displayMetrics);
+			width = displayMetrics.widthPixels;
+		} else {
+			try {
+				Method mGetRawW = Display.class.getMethod("getRawWidth");
+				width = (Integer) mGetRawW.invoke(display);
+			} catch (Exception e) {
+				width = display.getWidth();
+			}
 		}
+		
 		return width;
 	}
 
@@ -39,12 +48,19 @@ public class DeviceUtils {
 	public static int getScreenHeight(Activity ctx) {
 		int height;
 		Display display = ctx.getWindowManager().getDefaultDisplay();
-		try {
-			Method mGetRawH = Display.class.getMethod("getRawHeight");
-			height = (Integer) mGetRawH.invoke(display);
-		} catch (Exception e) {
-			height = display.getHeight();
+		if (UIUtils.hasJellyBeanMR1()) {
+			DisplayMetrics displayMetrics = new DisplayMetrics(); 
+			display.getRealMetrics(displayMetrics);
+			height = displayMetrics.heightPixels;
+		} else {
+			try {
+				Method mGetRawH = Display.class.getMethod("getRawHeight");
+				height = (Integer) mGetRawH.invoke(display);
+			} catch (Exception e) {
+				height = display.getHeight();
+			}
 		}
+		
 		return height;
 	}
 

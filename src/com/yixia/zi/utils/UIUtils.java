@@ -15,7 +15,6 @@
  */
 package com.yixia.zi.utils;
 
-import java.io.File;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -27,6 +26,8 @@ import android.os.StatFs;
 import android.support.v4.app.FragmentActivity;
 import android.text.format.Formatter;
 import android.util.TypedValue;
+
+import java.io.File;
 
 /**
  * 
@@ -103,7 +104,7 @@ public class UIUtils {
 		fetcher.setImageCache(ImageCache.findOrCreateCache(activity, IMAGE_FETCHER));
 		return fetcher;
 	}
-
+	
 	/**
 	 * Set the theme of the Activity, and restart it by creating a new Activity of
 	 * the same type.
