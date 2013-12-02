@@ -24,34 +24,34 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.widget.BaseAdapter;
 
-public abstract class ArrayAdapter<T> extends BaseAdapter {
+public abstract class ArrayListAdapter<T> extends BaseAdapter {
 
 	protected ArrayList<T> mObjects;
 	protected LayoutInflater mInflater;
 
-	public ArrayAdapter(final Context ctx, final ArrayList<T> l) {
+	public ArrayListAdapter(final Context ctx, final ArrayList<T> l) {
 		mObjects = l == null ? new ArrayList<T>() : l;
-		mInflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		mInflater = LayoutInflater.from(ctx);
 	}
 
-	public ArrayAdapter(final Context ctx, final T... l) {
+	public ArrayListAdapter(final Context ctx, final T... l) {
 		mObjects = new ArrayList<T>();
 		mObjects.addAll(Arrays.asList(l));
-		mInflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		mInflater = LayoutInflater.from(ctx);
 	}
 
-	public ArrayAdapter(final Context ctx, final List<T> l) {
+	public ArrayListAdapter(final Context ctx, final List<T> l) {
 		mObjects = new ArrayList<T>();
 		if (l != null)
 			mObjects.addAll(l);
-		mInflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		mInflater = LayoutInflater.from(ctx);
 	}
 	
-	public ArrayAdapter(final Context ctx, final Collection<T> l) {
+	public ArrayListAdapter(final Context ctx, final Collection<T> l) {
 		mObjects = new ArrayList<T>();
 		if (l != null)
 			mObjects.addAll(l);
-		mInflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		mInflater = LayoutInflater.from(ctx);
 	}
 	
 
