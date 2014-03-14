@@ -53,7 +53,7 @@ public class Device {
     sb.append(getPair("network_operator_name", tel.getNetworkOperatorName()));
     sb.append(getPair("unique_id", Crypto.md5(sb.toString())));
     ConnectivityManager cm = (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
-    sb.append(getPair("network_type", cm.getActiveNetworkInfo() == null ? "NONE" : cm.getActiveNetworkInfo().getTypeName()));
+    sb.append(getPair("network_type", cm.getActiveNetworkInfo() == null ? "-1" : String.valueOf(cm.getActiveNetworkInfo().getType())));
     return sb.toString();
   }
 
