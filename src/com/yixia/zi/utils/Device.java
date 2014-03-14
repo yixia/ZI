@@ -16,6 +16,7 @@
 package com.yixia.zi.utils;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.Build;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
@@ -51,6 +52,8 @@ public class Device {
     sb.append(getPair("sim_country_iso", tel.getSimCountryIso()));
     sb.append(getPair("network_operator_name", tel.getNetworkOperatorName()));
     sb.append(getPair("unique_id", Crypto.md5(sb.toString())));
+    ConnectivityManager cm = (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
+    sb.append(getPair("network_type", cm.getActiveNetworkInfo() == null ? "NONE" : cm.getActiveNetworkInfo().getTypeName()));
     return sb.toString();
   }
 
