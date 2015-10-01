@@ -5,7 +5,7 @@ ZI Library for wonderful Android development
 1) Components
 -------------
 
-* ProviderPreference, shared preferences accross processes built on ContentProvider
+* ProviderPreference, shared preferences across processes built on ContentProvider
 
 * ColorPicker, a color picker widget easy to use, thanks to Daniel Nilsson
 
